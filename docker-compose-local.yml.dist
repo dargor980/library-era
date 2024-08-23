@@ -1,0 +1,6 @@
+services:
+  app:
+    volumes:
+      - "${SSH_VOLUME}:/root/.ssh"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
