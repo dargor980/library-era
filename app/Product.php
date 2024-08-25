@@ -45,7 +45,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Product extends Model
 {
-    
+    protected $fillable = ['id', 'name', 'price', 'cost', 'profit', 'category_id', 'unit_type_id', 'stock_id', 'bar_code'];
 
     public function contentSale()
     {

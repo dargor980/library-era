@@ -11,6 +11,7 @@ use App\UnitType;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 class ProductController extends Controller
 {
@@ -55,9 +56,30 @@ class ProductController extends Controller
         DB::beginTransaction();
 
         try{
+            $stock = Stock::create([
+                'quantity' => $request->quantity,
+            ]);
 
+            Product::create([
+                'name' => $request->name,
+                'price' => $request->price,
+                'unit_type_id' => $request->unit_type_id,
+                'category_id' => $request->category_id,
+                'stock_id' => $stock->id,
+                'cost' => $request->cost,
+                'profit' => $request->price - $request->cost,
+                'bar_code' => $request->bar_code,
+            ]);
+
+            DB::commit();
+
+            return back()->with('mensaje', 'Producto agregado correctamente.');
         }catch(Exception $e) {
             DB::rollBack();
+
+            Log::channel('products')->error('Error al crear producto: ');
+            Log::channel('products')->error($e->getMessage());
+            Log::channel('products')->error($e->getTraceAsString());
 
             return back()->with('error', 'Hubo un error al crear el producto. Intente nuevamente.');
         }

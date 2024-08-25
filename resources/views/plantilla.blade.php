@@ -110,13 +110,13 @@
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="">Nuevo Producto</a>
+                        <a href="{{route('newProduct')}}">Nuevo Producto</a>
                       </li>
                       <li>
                       <a href="">Ver Productos</a>
                       </li>
                       <li>
-                        <a href="">Administrar Categoria</a>
+                        <a href="{{route('newCategory')}}">Administrar Categoria</a>
                       </li>
                     </ul>
                   </div>
