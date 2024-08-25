@@ -18,12 +18,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light navbargeneral shadow-sm">
             <div class="container justify-content-center">
-                <a class="navbar-brand text-white" href="{{ url('/') }}">Librería (nombre pendiente)
+                <a class="navbar-brand" href="{{ url('/') }}">MiLibrería
                 </a>
             </div>
         </nav>

@@ -1,25 +1,63 @@
-@extends('layouts.app')
 
-@section('titulo', 'Libreria (nombre pendiente)')
+@extends('plantilla')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+@section('titulo', 'Home')
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+@section('contenido')
+<div class="my-3">
+    <div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="my-3 text-center">Panel de Administración</h1>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Nueva Venta</h3>
+                        <p>Crea una nueva venta de forma rápida y sencilla</p>
 
-                    {{ __('You are logged in!') }}
+                        <a class="btn btn-success btn-lg">Crear nueva venta</a>
+                    </div>
+
+                </div>
+    
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Agregar stock</p>
+                        <h3>Inventario</h3>
+                        <p>Gestiona tu inventario de forma eficiente</p>
+
+                        <a class="btn btn-success btn-lg">Agregar stock</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        
+                        <p>Cerrar sesión</p>
+                        <h3>Salir</h3>
+                        <p>Crea una nueva venta de forma rápida y sencilla</p>
+
+                        <a class="btn btn-success btn-lg">Cerrar sesión</a>
+                    </div>
+
                 </div>
             </div>
         </div>
+
     </div>
+   
+
+
 </div>
 @endsection
