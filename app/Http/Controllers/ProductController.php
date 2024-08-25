@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Product;
+use App\Stock;
 use App\UnitType;
 use Exception;
 use Illuminate\Http\Request;
