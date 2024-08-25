@@ -48,7 +48,11 @@
                         <h3>Salir</h3>
                         <p>Crea una nueva venta de forma rápida y sencilla</p>
 
-                        <a class="btn btn-success btn-lg">Cerrar sesión</a>
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();" 
+                            class="btn btn-success btn-lg"
+                        >Cerrar sesión</a>
                     </div>
 
                 </div>
