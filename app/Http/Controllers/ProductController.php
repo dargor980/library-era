@@ -11,7 +11,10 @@ use App\UnitType;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use JeroenNoten\LaravelAdminLte\View\Components\Tool\Datatable;
 use Log;
+use Psy\Command\DumpCommand;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
@@ -28,7 +31,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('product.list');
+        return view('product.index');
+    }
+
+    public function getProducts(){
+        $products = Product::with(['category', 'unitType'])->select(['*']);
+       
+        return DataTables::of($products)->make(true);
     }
 
     /**

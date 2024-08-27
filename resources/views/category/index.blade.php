@@ -4,6 +4,38 @@
 
 @section('contenido')
 <div class="modal-dialog text-center">
+    <div class="modal-dialog text-center">
+        <div class="col-sm-12">
+            <div class="modal-content my-2">
+            <br>
+            @if (session('mensaje'))
+                <div class="container my-3">
+                    <div class="alert alert-success">
+                        {{session('mensaje')}}
+                    </div>
+                </div>           
+            @endif
+                <div>
+                    <h4 class="my-2 text-white">Nueva Categoria</h4>
+                </div>
+            <form method="POST" action="{{route('addCategory')}}"class="col-12" enctype="multipart/form-data">
+                    @csrf
+                <br>
+                    @error('name')
+                        <div class="badge badge-danger float-right"> *El Nombre de la categoria es obligatoria </div>
+                    @enderror
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-edit"></i></span>
+                        </div>
+                        
+                        <input name='name' type="text" placeholder="Categoria" class="form-control">
+                    </div>
+                    <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-plus"></i> Añadir</button>
+                </form>
+            </div>
+        </div> 
+    </div>
     <div class="col-sm-12">
         <div class="modal-content my-2">
         <br>

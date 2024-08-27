@@ -13,6 +13,7 @@
       <script  type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
       <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" defer></script>
       <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js" defer></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title> @yield('titulo') | MiLibrería </title>
     <link rel="icon" href="{!! asset('logo.ico') !!}"/>
   </head>
@@ -39,7 +40,7 @@
 
     <div class="page-wrapper chiller-theme toggled">
         <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-          <i class="fas fa-bars"></i>
+          <i class="fa fa-bars"></i>
         </a>
         <nav id="sidebar" class="sidebar-wrapper">
           <div class="sidebar-content">
@@ -47,7 +48,7 @@
                 <img src="/img/comida.png" class="icono" alt="">
                 <a href="{{route('home')}}" class="ml-3">Mi Librería</a>
               <div id="close-sidebar">
-                <i class="fas fa-times"></i>
+                <i class="fa fa-times"></i>
               </div>
             </div>
 
@@ -58,7 +59,7 @@
                 @else
                   <li class="sidebar-dropdown mt-2">
                     <a href="#">
-                      <i class="fas fa-user"></i>
+                      <i class="fa fa-user"></i>
                       <span>{{ Auth::user()->name }}</span>
                     </a>
                       <div class="sidebar-submenu">
@@ -92,19 +93,16 @@
 
                 <li class="sidebar-dropdown">
                   <a href="#">
-                    <i class="fa fa-tachometer-alt"></i>
-                    <span>Pedidos</span>
+                    <i class="fa fa-tachometer"></i>
+                    <span>Ventas</span>
                   </a>
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="" >Nuevo Pedido</a>
+                        <a href="" >Nueva Venta</a>
                       </li>
                       <li>
-                        <a href="">Ver Pedidos</a>
-                      </li>
-                      <li>
-                        <a href="">Administrar Pagos</a>
+                        <a href="">Ver Ventas</a>
                       </li>
                     </ul>
                   </div>
@@ -113,7 +111,7 @@
 
                 <li class="sidebar-dropdown">
                   <a href="#">
-                    <i class="fas fa-shopping-cart"></i>
+                    <i class="fa fa-shopping-cart"></i>
                     <span>Productos</span>
                   </a>
                   <div class="sidebar-submenu">
@@ -122,10 +120,10 @@
                         <a href="{{route('newProduct')}}">Nuevo Producto</a>
                       </li>
                       <li>
-                      <a href="">Ver Productos</a>
+                      <a href="{{route('productList')}}">Ver Productos</a>
                       </li>
                       <li>
-                        <a href="{{route('newCategory')}}">Administrar Categoria</a>
+                        <a href="{{route('newCategory')}}">Administrar Categorias</a>
                       </li>
                     </ul>
                   </div>
@@ -161,10 +159,7 @@
                       </li>
                       @endif
                       <li>
-                        <a href="">Stock Verduleria</a>
-                      </li>
-                      <li>
-                        <a href="">Stock Congelados</a>
+                        <a href="">Listado de Stock</a>
                       </li>
                     </ul>
                   </div>
@@ -172,7 +167,7 @@
 
                 <li class="sidebar-dropdown">
                   <a href="#">
-                    <i class="fa fa-chart-line"></i>
+                    <i class="fa fa-line-chart"></i>
                     <span>Estadísticas de ventas</span>
                   </a>
                   <div class="sidebar-submenu">
@@ -189,25 +184,6 @@
                     </ul>
                   </div>
                 </li>
-
-                <li class="sidebar-dropdown">
-                  <a href="#">
-                    <i class="fas fa-users"></i>
-                    <span>Clientes</span>
-                  </a>
-                  <div class="sidebar-submenu">
-                    <ul>
-                      <li>
-                        <a href="">Ver Clientes</a>
-                      </li>
-                      <li>
-                        <a href="">Nuevo Cliente</a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-
-
               </ul>
             </div>
             <!-- sidebar-menu  -->
@@ -275,7 +251,7 @@
         hr = checkTime(hr);
         min = checkTime(min);
         sec = checkTime(sec);
-        document.getElementById("clock").innerHTML = `<i class="far fa-clock text-white"></i> &nbsp;` + hr + ":" + min + ":" + sec + " " + ap;
+        document.getElementById("clock").innerHTML = `<i class="fa fa-clock-o text-white"></i> &nbsp;` + hr + ":" + min + ":" + sec + " " + ap;
 
         var months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         var days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];

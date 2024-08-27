@@ -44,6 +44,8 @@ class CategoryController extends Controller
             Category::create([
                 'name' => $request->name,
             ]);
+
+            return back()->with('mensaje', 'Categoría añadida.');
         } catch (Exception $e) {
             Log::channel('categories')->error('Error al crear categoría: ');
             Log::channel('categories')->error($e->getMessage());

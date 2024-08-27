@@ -64,16 +64,16 @@ class Product extends Model
 
     public function stock()
     {
-        return $this->hasMany(Stock::class);
+        return $this->hasMany(Stock::class, 'id', 'stock_id');
     }
 
     public function unitType()
     {
-        return $this->hasMany(UnitType::class);
+        return $this->hasMany(UnitType::class, 'id', 'unit_type_id');
     }
 
     public function category()
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(Category::class, 'id', 'category_id');
     }
 }
