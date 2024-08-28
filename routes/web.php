@@ -36,6 +36,10 @@ Route::post('/product/category/add','CategoryController@store')->name('addCatego
 //Products
 Route::get('/products/list', 'ProductController@index')->name('productList');
 Route::get('/products/get', 'ProductController@getProducts')->name('getProducts');
+Route::get('/product/details/edit/{id}','ProductController@edit')->name('editProd');
+Route::put('/product/edit/{id}','ProductController@update')->name('updateProd');
+Route::get('/product/details/{id}', 'ProductController@show')->name('detailProd');
+Route::get('/product/delete/{id}','ProductController@destroy')->name('deleteProd');
 
 Route::get('/product/new', 'ProductController@create')->name('newProduct');
 Route::post('/product/category/delete','CategoryController@destroy')->name('deleteCategory');

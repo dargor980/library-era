@@ -149,8 +149,15 @@ class ProductController extends Controller
     public function destroy($id)
     {
         try {
+            $destroyProduct = Product::find($id);
+            $destroyProduct->delete();
 
+            return redirect()->route('productList')->with('mensaje','Producto eliminado.');
         } catch(Exception $e) {
+            Log::channel('products')->error('Error al eliminar producto: ');
+            Log::channel('products')->error($e->getMessage());
+            Log::channel('products')->error($e->getTraceAsString());
+            
             return back()->with('error', 'Hubo un error al eliminar el producto');
         }
 

@@ -26,12 +26,12 @@
                     @enderror
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-edit"></i></span>
+                            <span class="input-group-text"><i class="fa fa-edit"></i></span>
                         </div>
                         
                         <input name='name' type="text" placeholder="Categoria" class="form-control">
                     </div>
-                    <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-plus"></i> Añadir</button>
+                    <button class="btn btn-success mb-3 text-white" type="submit"><i class="fa fa-plus"></i> Añadir</button>
                 </form>
             </div>
         </div> 
@@ -49,7 +49,7 @@
         @if (session('error'))
             <div class="container my-3">
                 <div class="alert alert-success">
-                    <span><i class="fas fa-exclamation-triangle text-danger"></i></span>&nbsp;{{session('error')}}
+                    <span><i class="fa fa-exclamation-triangle text-danger"></i></span>&nbsp;{{session('error')}}
                 </div>
             </div>           
         @endif
@@ -59,7 +59,7 @@
             <form method="POST" action="{{route('deleteCategory')}}" class="col-12" enctype="multipart/form-data">
                 @csrf
             <br>
-            @error('categoriaId')
+            @error('category_id')
                 <div class="badge badge-danger float-right">*Debe seleccionar un producto </div>
             @enderror
             <select name='category_id' class="custom-select">
@@ -70,7 +70,7 @@
             </select>
             <br>
                 <br>
-                <button class="btn btn-danger mb-3 text-white" type="submit"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                <button class="btn btn-danger mb-3 text-white" type="submit"><i class="fa fa-trash"></i> Eliminar</button>
             </form>
         </div>
     </div> 
