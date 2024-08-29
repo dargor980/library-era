@@ -131,9 +131,20 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateProductRequest $request)
+    public function update(UpdateProductRequest $request, $id)
     {
         try {
+          
+            $updateProduct = Product::find($id)->update([
+                'name' => $request->name,
+                'price' => $request->price,
+                'unit_type_id' => $request->unit_type_id,
+                'category_id' => $request->category_id,
+                'cost' => $request->cost,
+                'profit' => $request->price - $request->cost,
+            ]);
+
+            return back()->with('mensaje','Producto actualizado. ');
 
         } catch (Exception $e) {
             return back()->with('error', 'Hubo un error al actualizar el producto. Intente nuevamente');
@@ -157,7 +168,7 @@ class ProductController extends Controller
             Log::channel('products')->error('Error al eliminar producto: ');
             Log::channel('products')->error($e->getMessage());
             Log::channel('products')->error($e->getTraceAsString());
-            
+
             return back()->with('error', 'Hubo un error al eliminar el producto');
         }
 

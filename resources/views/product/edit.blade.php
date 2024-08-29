@@ -30,7 +30,7 @@
                         <span class="input-group-text"><i class="fa fa-edit"></i></span>
                     </div>
                      
-                    <input name='name' type="text" placeholder="Nombre del producto" class="form-control" value="{{$product->nombre}}">
+                    <input name='name' type="text" placeholder="Nombre del producto" class="form-control" value="{{$product->name}}">
                 </div>
 
                 @error('price')
@@ -51,7 +51,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa fa-money"></i></span>
                     </div>
-                    <input name='costo' type="number" min="0" placeholder="Precio costo" class="form-control" value="{{$product->cost}}"> 
+                    <input name='cost' type="number" min="0" placeholder="Precio costo" class="form-control" value="{{$product->cost}}"> 
                 </div>
 
                 @error('category_id')
@@ -67,7 +67,7 @@
                 @error('unit_type_id')
                     <div class="badge badge-danger float-right"> *Debe seleccionar una medida </div>
                 @enderror
-                <select name='medidaId' class="custom-select  mb-3">
+                <select name='unit_type_id' class="custom-select  mb-3">
                     <option selected value="0">Seleccione Unidad de Medida:</option>
                     @foreach($unitTypes as $item)
                     <option value="{{$item->id}}">{{$item->name}}</option>  

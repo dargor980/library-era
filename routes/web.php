@@ -45,3 +45,14 @@ Route::get('/product/new', 'ProductController@create')->name('newProduct');
 Route::post('/product/category/delete','CategoryController@destroy')->name('deleteCategory');
 Route::post('/product/new/add','ProductController@store')->name('addproduct');
 
+//Stock
+Route::get('/stock/list', 'StockController@index')->name('listStock');
+Route::get('/stock/getproducts', 'StockController@getStocks')->name('getStocks');
+
+
+
+Route::group(['middleware' => 'admin'], function() {
+    Route::get('/stock/new', 'StockController@show')->name('newStock');
+   Route::post('/stock/new/update','StockController@update')->name('updatestock');
+
+});

@@ -148,18 +148,18 @@
 
                 <li class="sidebar-dropdown">
                   <a href="#">
-                    <i class="fas fa-boxes"></i>
+                    <i class="fa fa-archive"></i>
                     <span>Inventario</span>
                   </a>
                   <div class="sidebar-submenu">
                     <ul>
                       @if(auth()->user()->id==1)
                       <li>
-                        <a href="">Ingresar Stock</a>
+                        <a href="{{route('newStock')}}">Ingresar Stock</a>
                       </li>
                       @endif
                       <li>
-                        <a href="">Listado de Stock</a>
+                        <a href="{{route('listStock')}}">Listado de Stock</a>
                       </li>
                     </ul>
                   </div>
