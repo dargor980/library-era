@@ -73,7 +73,7 @@
                         }
                     ],
 
-                    ajax: '{!! route('getPedidos') !!}',
+                    ajax: '{!! route('getSales') !!}',
                     columns: [
                         {data: 'id', name: 'id'},
                         {

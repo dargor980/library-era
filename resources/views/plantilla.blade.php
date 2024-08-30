@@ -99,10 +99,10 @@
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="" >Nueva Venta</a>
+                        <a href="{{route('newSale')}}" >Nueva Venta</a>
                       </li>
                       <li>
-                        <a href="">Ver Ventas</a>
+                        <a href="{{route('listSales')}}">Ver Ventas</a>
                       </li>
                     </ul>
                   </div>

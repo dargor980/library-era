@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Sale;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
 {
@@ -13,8 +15,25 @@ class SalesController extends Controller
      */
     public function index()
     {
-        //
+        return view('sales.list');
     }
+
+    public function getSales()
+    {
+        $sales = Sale::select('*')->orderBy('id', 'DESC');
+
+        return DataTables::of($sales)
+            ->addColumn('link', function($sale){
+                return '<a href="/sales/detail/'. $sale->id . '"> aaaa</a>';
+            })
+            ->addColumn('created_at', function($sale) {
+                return $sale->created_at->format('Y-m-d');
+            })
+            ->rawColumns(['link'])
+            ->make(true)
+        ;
+    }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -23,7 +42,7 @@ class SalesController extends Controller
      */
     public function create()
     {
-        //
+        return view('sales.new');
     }
 
     /**

@@ -49,7 +49,9 @@ Route::post('/product/new/add','ProductController@store')->name('addproduct');
 Route::get('/stock/list', 'StockController@index')->name('listStock');
 Route::get('/stock/getproducts', 'StockController@getStocks')->name('getStocks');
 
-
+Route::get('/sales/list', 'SalesController@index')->name('listSales');
+Route::get('/sales/getList', 'SalesController@getSales')->name('getSales');
+Route::get('/sales/new', 'SalesController@create')->name('newSale');
 
 Route::group(['middleware' => 'admin'], function() {
     Route::get('/stock/new', 'StockController@show')->name('newStock');
