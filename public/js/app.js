@@ -1911,6 +1911,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HeaderComponent.vue */ "./resources/js/components/HeaderComponent.vue");
 /* harmony import */ var _ProductListComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductListComponent.vue */ "./resources/js/components/ProductListComponent.vue");
 /* harmony import */ var _SummaryComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SummaryComponent.vue */ "./resources/js/components/SummaryComponent.vue");
+/* harmony import */ var _models_SelectedProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../models/SelectedProduct */ "./resources/js/models/SelectedProduct.js");
+
 
 
 
@@ -1923,49 +1925,71 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      products: [{
-        id: 1,
-        name: 'Producto 1',
-        description: 'Descripción del producto',
-        price: '$9.99',
-        quantity: 1
-      }, {
-        id: 2,
-        name: 'Producto 2',
-        description: 'Descripción del producto',
-        price: '$14.99',
-        quantity: 1
-      }],
-      barcodeInput: ''
+      products: [],
+      selectedProducts: [],
+      barcodeInput: '',
+      total: 0
     };
   },
   mounted: function mounted() {
     document.addEventListener('keydown', this.handleBarcodeScan);
   },
+  created: function created() {
+    var _this = this;
+    axios.get('/sales/products-sale').then(function (res) {
+      _this.products = res.data;
+    });
+  },
   beforeDestroy: function beforeDestroy() {
     document.removeEventListener('keydown', this.handleBarcodeScan);
   },
   methods: {
+    handleQuantityUpdate: function handleQuantityUpdate(updatedProduct) {
+      this.updateTotal();
+    },
+    updateTotal: function updateTotal() {
+      this.total = this.selectedProducts.reduce(function (acc, product) {
+        return acc + product.subtotal;
+      }, 0);
+    },
     handleBarcodeScan: function handleBarcodeScan(event) {
       if (event.key === 'Tab') {
         event.preventDefault();
+        this.barcodeInput = this.barcodeInput.replace("Clear", "");
         this.addProductByBarcode(this.barcodeInput);
         this.barcodeInput = '';
       } else {
+        console.log("entra aca");
         this.barcodeInput += event.key;
       }
     },
     addProductByBarcode: function addProductByBarcode(barcode) {
-      //TODO: cambiar esto a una llamada al backend
-      var newProduct = {
-        id: this.products.length + 1,
-        name: "Producto ".concat(this.products.length + 1),
-        description: "Descripci\xF3n del producto",
-        price: '$9.99',
-        quantity: 1
-      };
-      this.products.push(newProduct);
-      console.log(this.products);
+      barcode = barcode.replace("Clear", "");
+      var product = this.products.find(function (product) {
+        return product.bar_code == barcode;
+      });
+      if (product) {
+        var newProduct = {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          quantity: 1
+        };
+        var selectedProduct = this.selectedProducts.find(function (selectedProduct) {
+          return selectedProduct.id === newProduct.id;
+        });
+        if (selectedProduct) {
+          selectedProduct.quantity += 1;
+          selectedProduct.subtotal += selectedProduct.price;
+          this.handleQuantityUpdate(selectedProduct);
+        } else {
+          var newSelectedProduct = new _models_SelectedProduct__WEBPACK_IMPORTED_MODULE_3__["default"](product.id, product.name, product.price, product.bar_code, 1, product.price);
+          this.selectedProducts.push(newSelectedProduct);
+          this.handleQuantityUpdate(newSelectedProduct);
+        }
+      } else {
+        console.log("Producto no encontrado");
+      }
     }
   }
 });
@@ -2023,7 +2047,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateQuantity: function updateQuantity() {
-      //TODO: Implementar evento.
+      this.product.subtotal = this.product.quantity * this.product.price;
       this.$emit('update-quantity', this.product);
     }
   }
@@ -2052,6 +2076,11 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: true
     }
+  },
+  methods: {
+    handleQuantityUpdate: function handleQuantityUpdate(updatedProduct) {
+      this.$emit('update-quantity', updatedProduct);
+    }
   }
 });
 
@@ -2068,10 +2097,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SummaryComponent',
-  data: function data() {
-    return {
-      total: '$24.98'
-    };
+  props: {
+    total: {
+      type: Number,
+      required: true
+    }
   },
   methods: {
     scan: function scan() {
@@ -2117,12 +2147,18 @@ var render = function render() {
   }, [_c("ProductListComponent", {
     staticClass: "container-margin",
     attrs: {
-      products: _vm.products
+      products: _vm.selectedProducts
+    },
+    on: {
+      "update-quantity": _vm.handleQuantityUpdate
     }
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-4 h-70"
   }, [_c("SummaryComponent", {
-    staticClass: "container-margin"
+    staticClass: "container-margin",
+    attrs: {
+      total: _vm.total
+    }
   })], 1)])], 1);
 };
 var staticRenderFns = [];
@@ -2247,7 +2283,9 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "product-price"
-  }, [_c("span", [_c("strong", [_vm._v(_vm._s(_vm.product.price))])])])]);
+  }, [_c("span", [_c("strong", [_vm._v(_vm._s(_vm.product.price))])])]), _vm._v(" "), _c("div", {
+    staticClass: "product-subtotal"
+  }, [_c("span", [_c("strong", [_vm._v(_vm._s(_vm.product.subtotal))])])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -2276,6 +2314,9 @@ var render = function render() {
       key: product.id,
       attrs: {
         product: product
+      },
+      on: {
+        "update-quantity": _vm.handleQuantityUpdate
       }
     });
   })], 2);
@@ -2286,20 +2327,26 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-md-4"
+    staticClass: "col-md-3"
   }, [_c("h2", [_vm._v("Productos")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-4"
+    staticClass: "col-md-3"
   }, [_c("h2", {
     staticStyle: {
       "text-align": "end"
     }
   }, [_vm._v("Cantidad")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-4"
+    staticClass: "col-md-3"
   }, [_c("h2", {
     staticStyle: {
       "text-align": "end"
     }
-  }, [_vm._v("Precio")])])]);
+  }, [_vm._v("Precio")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("h2", {
+    staticStyle: {
+      "text-align": "end"
+    }
+  }, [_vm._v("Subtotal")])])]);
 }];
 render._withStripped = true;
 
@@ -2322,7 +2369,7 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "summary card my-3 h-100"
-  }, [_c("h2", [_vm._v("Total")]), _vm._v(" "), _c("h3", [_c("strong", [_vm._v(_vm._s(_vm.total))])]), _vm._v(" "), _c("div", {
+  }, [_c("h2", [_vm._v("Total")]), _vm._v(" "), _c("h3", [_vm._v(_vm._s(_vm.total)), _c("strong")]), _vm._v(" "), _c("div", {
     staticClass: "actions row"
   }, [_c("div", {
     staticClass: "col-md-4"
@@ -51231,6 +51278,37 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_SummaryComponent_vue_vue_type_template_id_2b3b8ee2_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
+
+
+/***/ }),
+
+/***/ "./resources/js/models/SelectedProduct.js":
+/*!************************************************!*\
+  !*** ./resources/js/models/SelectedProduct.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SelectedProduct; });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+var SelectedProduct = /*#__PURE__*/_createClass(function SelectedProduct(id, name, price, bar_code) {
+  var quantity = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
+  var subtotal = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+  _classCallCheck(this, SelectedProduct);
+  this.id = id;
+  this.name = name;
+  this.price = price;
+  this.bar_code = bar_code;
+  this.quantity = quantity;
+  this.subtotal = subtotal;
+});
 
 
 /***/ }),

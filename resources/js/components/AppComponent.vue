@@ -5,11 +5,15 @@
         <div class="col-md-8 h-70">
             <ProductListComponent 
                 class="container-margin" 
-                :products="products"
+                :products="selectedProducts"
+                @update-quantity="handleQuantityUpdate"
             />
         </div>
         <div class="col-md-4 h-70">
-            <SummaryComponent class="container-margin"/>
+            <SummaryComponent 
+            class="container-margin"
+            :total="total"
+        />
         </div>
       </div>
     </div>
@@ -19,6 +23,7 @@
   import HeaderComponent from './HeaderComponent.vue';
   import ProductListComponent from './ProductListComponent.vue';
   import SummaryComponent from './SummaryComponent.vue';
+  import SelectedProduct from '../models/SelectedProduct';
   
   export default {
     name: 'AppComponent',
@@ -29,42 +34,86 @@
     },
     data() {
         return {
-        products: [
-            { id: 1, name: 'Producto 1', description: 'Descripción del producto', price: '$9.99', quantity: 1 },
-            { id: 2, name: 'Producto 2', description: 'Descripción del producto', price: '$14.99', quantity: 1 }
-        ],
-        barcodeInput: ''
+            products: [],
+            selectedProducts: [],
+            barcodeInput: '',
+            total: 0,
         };
     },
     mounted() {
         document.addEventListener('keydown', this.handleBarcodeScan);
     },
+    created() {
+        axios.get('/sales/products-sale').then(res => {
+            this.products = res.data;
+        });
+    },
     beforeDestroy() {
         document.removeEventListener('keydown', this.handleBarcodeScan);
     },
     methods: {
-        handleBarcodeScan(event) {
-        if (event.key === 'Tab') {
-            event.preventDefault();
-            this.addProductByBarcode(this.barcodeInput);
-            this.barcodeInput = '';
-        } else {
-            this.barcodeInput += event.key;
-        }
+
+        handleQuantityUpdate(updatedProduct) {
+            this.updateTotal();
         },
+
+        updateTotal() {
+            this.total = this.selectedProducts.reduce((acc, product) => {
+                return acc + product.subtotal;
+            }, 0);
+        },
+
+        handleBarcodeScan(event) {
+            if (event.key === 'Tab') {
+                event.preventDefault();
+                this.barcodeInput = this.barcodeInput.replace("Clear", "");
+                this.addProductByBarcode(this.barcodeInput);
+                this.barcodeInput = '';
+            } else {
+                console.log("entra aca");
+                this.barcodeInput += event.key;
+            }
+        },
+
         addProductByBarcode(barcode) {
        
-        //TODO: cambiar esto a una llamada al backend
-        const newProduct = {
-            id: this.products.length + 1,
-            name: `Producto ${this.products.length + 1}`,
-            description: `Descripción del producto`,
-            price: '$9.99',  
-            quantity: 1
-        };
-        
-        this.products.push(newProduct);
-        console.log(this.products);
+            barcode = barcode.replace("Clear", "");
+    
+            let product = this.products.find(product => product.bar_code == barcode);
+            if(product) {
+
+                const newProduct = {
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: 1
+                };
+
+                let selectedProduct = this.selectedProducts.find(selectedProduct => selectedProduct.id === newProduct.id);
+
+                if(selectedProduct) {
+                    selectedProduct.quantity += 1;
+                    selectedProduct.subtotal += selectedProduct.price;
+
+                    this.handleQuantityUpdate(selectedProduct);
+                } else {
+                    const newSelectedProduct = new SelectedProduct(
+                        product.id,
+                        product.name,
+                        product.price,
+                        product.bar_code,
+                        1,
+                        product.price,
+                    );
+
+                    this.selectedProducts.push(newSelectedProduct);
+
+                    this.handleQuantityUpdate(newSelectedProduct);
+                } 
+            } else {
+                console.log("Producto no encontrado");
+            }
+    
         }
     }
   }

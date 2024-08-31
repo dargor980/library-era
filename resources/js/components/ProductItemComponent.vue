@@ -16,6 +16,9 @@
       <div class="product-price">
         <span><strong>{{ product.price }}</strong></span>
       </div>
+      <div class="product-subtotal">
+        <span><strong>{{ product.subtotal }}</strong></span>
+      </div>
     </div>
   </template>
   
@@ -30,7 +33,8 @@
     },
     methods: {
     updateQuantity() {
-      //TODO: Implementar evento.
+      this.product.subtotal = this.product.quantity * this.product.price;
+
       this.$emit('update-quantity', this.product);
     }
   }

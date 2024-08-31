@@ -1,7 +1,7 @@
 <template>
     <div class="summary card my-3 h-100">
       <h2>Total</h2>
-      <h3><strong>{{ total }}</strong></h3>
+      <h3>{{ total }}<strong></strong></h3>
       <div class="actions row">
 
         <div class="col-md-4">
@@ -29,10 +29,11 @@
   <script>
   export default {
     name: 'SummaryComponent',
-    data() {
-      return {
-        total: '$24.98'
-      };
+    props: {
+        total: {
+            type: Number,
+            required: true
+        }
     },
     methods: {
       scan() {

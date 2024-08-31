@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sale;
+use DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -32,6 +33,18 @@ class SalesController extends Controller
             ->rawColumns(['link'])
             ->make(true)
         ;
+    }
+
+    public function getSaleProducts()
+    {
+        $products = DB::table('products')
+            ->join('stocks', 'stock_id', 'stocks.id')
+            ->where('stocks.quantity', '>', 0)
+            ->orderBy('products.name', 'ASC')
+            ->get()
+        ;
+
+        return $products;
     }
     
 

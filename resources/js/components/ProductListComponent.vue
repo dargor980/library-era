@@ -1,20 +1,24 @@
 <template>
     <div class="product-list card my-3 h-100">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h2>Productos</h2>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h2 style="text-align: end;">Cantidad</h2>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h2 style="text-align: end;">Precio</h2>
+            </div>
+            <div class="col-md-3">
+                <h2 style="text-align: end;">Subtotal</h2>
             </div>
         </div>
       <ProductItemComponent
         v-for="product in products"
         :key="product.id"
         :product="product"
+        @update-quantity="handleQuantityUpdate"
       />
     </div>
   </template>
@@ -31,6 +35,12 @@
         products: {
             type: Array,
             required: true
+        }
+    },
+    methods: {
+        handleQuantityUpdate(updatedProduct) {
+
+            this.$emit('update-quantity', updatedProduct);
         }
     }
 
