@@ -48,7 +48,7 @@
   </script>
   
   <style scoped>
-  .product-list {
-    padding: 20px;
-  }
+    .product-list {
+      padding: 20px;
+    }
   </style>

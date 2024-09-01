@@ -24,6 +24,7 @@
   import ProductListComponent from './ProductListComponent.vue';
   import SummaryComponent from './SummaryComponent.vue';
   import SelectedProduct from '../models/SelectedProduct';
+  import Swal from 'sweetalert2';
   
   export default {
     name: 'AppComponent',
@@ -111,7 +112,12 @@
                     this.handleQuantityUpdate(newSelectedProduct);
                 } 
             } else {
-                console.log("Producto no encontrado");
+                Swal.fire({
+                    title: 'Producto no encontrado',
+                    text: 'Registre el producto o intente nuevamente',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
             }
     
         }
