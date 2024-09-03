@@ -15,10 +15,10 @@
             </div>
         </div>
       <ProductItemComponent
-        v-for="product in products"
+        v-for="product in selectedProducts"
         :key="product.id"
         :product="product"
-        @update-quantity="handleQuantityUpdate"
+        @update-quantity="checkQuantity(product)"
       />
     </div>
   </template>
@@ -35,12 +35,23 @@
         products: {
             type: Array,
             required: true
-        }
+        },
+        selectedProducts: {
+          type: Array,
+          required: true
+        },
     },
     methods: {
         handleQuantityUpdate(updatedProduct) {
 
             this.$emit('update-quantity', updatedProduct);
+        },
+
+        checkQuantity(product) {
+          const selectedProduct = this.products.find(p => p.id === product.id)
+          if(selectedProduct && selectedProduct.quantity < product.quantity) {
+            this.$emit('quantity-exceeded', product);
+          }
         }
     }
 

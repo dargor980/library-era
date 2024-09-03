@@ -1947,7 +1947,18 @@ __webpack_require__.r(__webpack_exports__);
     document.removeEventListener('keydown', this.handleBarcodeScan);
   },
   methods: {
+    handleQuantityExceeded: function handleQuantityExceeded(product) {
+      sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire({
+        title: 'No hay stock',
+        text: "El producto \"".concat(product.name, "\" supera el stock disponible."),
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      console.log("product", product);
+      product.quantity -= 1;
+    },
     handleQuantityUpdate: function handleQuantityUpdate(updatedProduct) {
+      this.checkStock(updatedProduct);
       this.updateTotal();
     },
     updateTotal: function updateTotal() {
@@ -1962,7 +1973,6 @@ __webpack_require__.r(__webpack_exports__);
         this.addProductByBarcode(this.barcodeInput);
         this.barcodeInput = '';
       } else {
-        console.log("entra aca");
         this.barcodeInput += event.key;
       }
     },
@@ -1997,6 +2007,16 @@ __webpack_require__.r(__webpack_exports__);
           icon: 'error',
           confirmButtonText: 'OK'
         });
+      }
+    },
+    checkStock: function checkStock(product) {
+      var selectedProduct = this.products.find(function (p) {
+        return p.id === product.id;
+      });
+      console.log("selected product", selectedProduct);
+      console.log("product", product);
+      if (selectedProduct && selectedProduct.quantity < product.quantity) {
+        this.handleQuantityExceeded(product);
       }
     }
   }
@@ -2083,11 +2103,23 @@ __webpack_require__.r(__webpack_exports__);
     products: {
       type: Array,
       required: true
+    },
+    selectedProducts: {
+      type: Array,
+      required: true
     }
   },
   methods: {
     handleQuantityUpdate: function handleQuantityUpdate(updatedProduct) {
       this.$emit('update-quantity', updatedProduct);
+    },
+    checkQuantity: function checkQuantity(product) {
+      var selectedProduct = this.products.find(function (p) {
+        return p.id === product.id;
+      });
+      if (selectedProduct && selectedProduct.quantity < product.quantity) {
+        this.$emit('quantity-exceeded', product);
+      }
     }
   }
 });
@@ -2155,10 +2187,12 @@ var render = function render() {
   }, [_c("ProductListComponent", {
     staticClass: "container-margin",
     attrs: {
-      products: _vm.selectedProducts
+      products: _vm.products,
+      "selected-products": _vm.selectedProducts
     },
     on: {
-      "update-quantity": _vm.handleQuantityUpdate
+      "update-quantity": _vm.handleQuantityUpdate,
+      "quantity-exceeded": _vm.handleQuantityExceeded
     }
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-4 h-70"
@@ -2317,14 +2351,16 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "product-list card my-3 h-100"
-  }, [_vm._m(0), _vm._v(" "), _vm._l(_vm.products, function (product) {
+  }, [_vm._m(0), _vm._v(" "), _vm._l(_vm.selectedProducts, function (product) {
     return _c("ProductItemComponent", {
       key: product.id,
       attrs: {
         product: product
       },
       on: {
-        "update-quantity": _vm.handleQuantityUpdate
+        "update-quantity": function updateQuantity($event) {
+          return _vm.checkQuantity(product);
+        }
       }
     });
   })], 2);

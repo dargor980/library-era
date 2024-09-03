@@ -5,8 +5,10 @@
         <div class="col-md-8 h-70">
             <ProductListComponent 
                 class="container-margin" 
-                :products="selectedProducts"
+                :products="products"
+                :selected-products="selectedProducts"
                 @update-quantity="handleQuantityUpdate"
+                @quantity-exceeded="handleQuantityExceeded"
             />
         </div>
         <div class="col-md-4 h-70">
@@ -53,9 +55,21 @@
         document.removeEventListener('keydown', this.handleBarcodeScan);
     },
     methods: {
+        handleQuantityExceeded(product) {
+            Swal.fire({
+                    title: 'No hay stock',
+                    text: `El producto "${product.name}" supera el stock disponible.`,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+            })
 
+            console.log("product", product);
+            product.quantity -=1;
+        },
         handleQuantityUpdate(updatedProduct) {
+            this.checkStock(updatedProduct);
             this.updateTotal();
+
         },
 
         updateTotal() {
@@ -71,7 +85,6 @@
                 this.addProductByBarcode(this.barcodeInput);
                 this.barcodeInput = '';
             } else {
-                console.log("entra aca");
                 this.barcodeInput += event.key;
             }
         },
@@ -120,6 +133,16 @@
                 })
             }
     
+        },
+
+        checkStock(product) {
+            const selectedProduct = this.products.find(p => p.id === product.id);
+
+            console.log("selected product", selectedProduct);
+            console.log("product", product);
+            if(selectedProduct && selectedProduct.quantity < product.quantity) {
+                this.handleQuantityExceeded(product);
+            }
         }
     }
   }
