@@ -137,9 +137,7 @@
 
         checkStock(product) {
             const selectedProduct = this.products.find(p => p.id === product.id);
-
-            console.log("selected product", selectedProduct);
-            console.log("product", product);
+            
             if(selectedProduct && selectedProduct.quantity < product.quantity) {
                 this.handleQuantityExceeded(product);
             }

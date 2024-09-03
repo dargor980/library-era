@@ -2013,8 +2013,6 @@ __webpack_require__.r(__webpack_exports__);
       var selectedProduct = this.products.find(function (p) {
         return p.id === product.id;
       });
-      console.log("selected product", selectedProduct);
-      console.log("product", product);
       if (selectedProduct && selectedProduct.quantity < product.quantity) {
         this.handleQuantityExceeded(product);
       }
@@ -2077,6 +2075,9 @@ __webpack_require__.r(__webpack_exports__);
     updateQuantity: function updateQuantity() {
       this.product.subtotal = this.product.quantity * this.product.price;
       this.$emit('update-quantity', this.product);
+    },
+    truncateText: function truncateText(text, length) {
+      return text.length > length ? text.substring(0, length) + '...' : text;
     }
   }
 });
@@ -2290,11 +2291,11 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "product-item"
+    staticClass: "row"
   }, [_c("div", {
-    staticClass: "product-details"
-  }, [_c("h5", [_vm._v(_vm._s(_vm.product.name))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.product.description))])]), _vm._v(" "), _c("div", {
-    staticClass: "product-quantity"
+    staticClass: "col-md-6"
+  }, [_c("h5", [_vm._v(_vm._s(_vm.truncateText(_vm.product.name, 50)))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.product.description))])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-2 d-flex justify-content-center align-items-center"
   }, [_c("input", {
     directives: [{
       name: "model",
@@ -2324,9 +2325,9 @@ var render = function render() {
       }
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "product-price"
+    staticClass: "col-md-2 d-flex justify-content-center align-items-cente"
   }, [_c("span", [_c("strong", [_vm._v(_vm._s(_vm.product.price))])])]), _vm._v(" "), _c("div", {
-    staticClass: "product-subtotal"
+    staticClass: "col-md-2 d-flex justify-content-center align-items-cente"
   }, [_c("span", [_c("strong", [_vm._v(_vm._s(_vm.product.subtotal))])])])]);
 };
 var staticRenderFns = [];
@@ -2371,24 +2372,24 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-6"
   }, [_c("h2", [_vm._v("Productos")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-2"
   }, [_c("h2", {
     staticStyle: {
-      "text-align": "end"
+      "text-align": "center"
     }
   }, [_vm._v("Cantidad")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-2"
   }, [_c("h2", {
     staticStyle: {
-      "text-align": "end"
+      "text-align": "center"
     }
   }, [_vm._v("Precio")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-2"
   }, [_c("h2", {
     staticStyle: {
-      "text-align": "end"
+      "text-align": "center"
     }
   }, [_vm._v("Subtotal")])])]);
 }];

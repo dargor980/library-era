@@ -1,10 +1,10 @@
 <template>
-    <div class="product-item">
-      <div class="product-details">
-        <h5>{{ product.name }}</h5>
+    <div class="row">
+      <div class="col-md-6">
+        <h5>{{truncateText(product.name, 50) }}</h5>
         <p>{{ product.description }}</p>
       </div>
-      <div class="product-quantity">
+      <div class="col-md-2 d-flex justify-content-center align-items-center">
           <input
               type="number"
               class="form-control"
@@ -13,10 +13,10 @@
               @change="updateQuantity"
           >
       </div>
-      <div class="product-price">
+      <div class="col-md-2 d-flex justify-content-center align-items-cente">
         <span><strong>{{ product.price }}</strong></span>
       </div>
-      <div class="product-subtotal">
+      <div class="col-md-2 d-flex justify-content-center align-items-cente">
         <span><strong>{{ product.subtotal }}</strong></span>
       </div>
     </div>
@@ -36,6 +36,9 @@
       this.product.subtotal = this.product.quantity * this.product.price;
 
       this.$emit('update-quantity', this.product);
+    },
+    truncateText(text, length) {
+      return text.length > length ? text.substring(0, length) + '...' : text;
     }
   }
   }
