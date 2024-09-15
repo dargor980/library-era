@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ContentSale extends Model
 {
+    protected $fillable = ['id', 'sale_id', 'product_id', 'quantity', 'subtotal'];
     
     public function product()
     {

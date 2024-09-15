@@ -15,6 +15,8 @@
             <SummaryComponent 
             class="container-margin"
             :total="total"
+            @payment-completed="handlePaymentCompleted"
+            @clear-cart="clearCart"
         />
         </div>
       </div>
@@ -49,6 +51,7 @@
     created() {
         axios.get('/sales/products-sale').then(res => {
             this.products = res.data;
+            console.log("products", this.products);
         });
     },
     beforeDestroy() {
@@ -73,6 +76,7 @@
         },
 
         updateTotal() {
+            console.log("selected products update", this.selectedProducts);
             this.total = this.selectedProducts.reduce((acc, product) => {
                 return acc + product.subtotal;
             }, 0);
@@ -94,7 +98,9 @@
             barcode = barcode.replace("Clear", "");
     
             let product = this.products.find(product => product.bar_code == barcode);
+            console.log("product:", product);
             if(product) {
+                console.log("product id", product.id);
 
                 const newProduct = {
                     id: product.id,
@@ -111,14 +117,14 @@
 
                     this.handleQuantityUpdate(selectedProduct);
                 } else {
-                    const newSelectedProduct = new SelectedProduct(
-                        product.id,
-                        product.name,
-                        product.price,
-                        product.bar_code,
-                        1,
-                        product.price,
-                    );
+                    const newSelectedProduct ={
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        bar_code: product.bar_code,
+                        quantity: 1,
+                        subtotal: product.price,
+                    };
 
                     this.selectedProducts.push(newSelectedProduct);
 
@@ -141,6 +147,66 @@
             if(selectedProduct && selectedProduct.quantity < product.quantity) {
                 this.handleQuantityExceeded(product);
             }
+        },
+
+        async handlePaymentCompleted(paymentInfo) {
+            try {
+
+                const saleData = {
+                    total: this.total,
+                    products: this.selectedProducts.map(product => ({
+                        product_id: product.id,
+                        quantity: product.quantity,
+                    }))
+                };
+
+                console.log(saleData);
+
+                
+
+                const response = await axios.post('/sales/complete', saleData);
+    
+                if(response.status != 201) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Error al crear la venta. Por favor, Inténtelo de nuevo.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                this.selectedProducts = [];
+                this.total = 0;
+    
+                Swal.fire({
+                    title: 'Pago Completado',
+                    text: `El pago se ha registrado correctamente mediante ${paymentInfo.method === 'cash' ? 'Efectivo' : 'Transferencia'}.`,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            } catch(error) {
+                let errorMessage = 'Ha ocurrido un error. Por favor inténtelo nuevamente';
+
+                if(error.response && error.response.data && error.response.data.message) {
+                    errorMessage = error.response.data.message;
+                }
+
+                Swal.fire({
+                    title: 'Error',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+
+                console.error(error);
+            }
+
+
+        },
+        clearCart() {
+            this.selectedProducts = [];
+            this.total = 0;
         }
     }
   }

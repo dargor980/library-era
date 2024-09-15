@@ -1,25 +1,32 @@
 <template>
-    <div class="row">
-      <div class="col-md-6">
+    <tr>
+      <td>
         <h5>{{truncateText(product.name, 50) }}</h5>
         <p>{{ product.description }}</p>
-      </div>
-      <div class="col-md-2 d-flex justify-content-center align-items-center">
-          <input
+      </td>
+
+      <td class="text-center align-middle">
+        <input
               type="number"
               class="form-control"
               v-model.number="product.quantity" 
               min="1" 
               @change="updateQuantity"
           >
-      </div>
-      <div class="col-md-2 d-flex justify-content-center align-items-cente">
+      </td>
+
+      <td class="text-center align-middle">
         <span><strong>{{ product.price }}</strong></span>
-      </div>
-      <div class="col-md-2 d-flex justify-content-center align-items-cente">
+      </td>
+
+      <td class="text-center align-middle">
         <span><strong>{{ product.subtotal }}</strong></span>
-      </div>
-    </div>
+      </td>
+
+      <td class="text-center align-middle">
+        <button @click="" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+      </td>
+    </tr>
   </template>
   
   <script>

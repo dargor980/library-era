@@ -1,25 +1,26 @@
 <template>
     <div class="product-list card my-3 h-100">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>Productos</h2>
-            </div>
-            <div class="col-md-2">
-                <h2 style="text-align: center;">Cantidad</h2>
-            </div>
-            <div class="col-md-2">
-                <h2 style="text-align: center;">Precio</h2>
-            </div>
-            <div class="col-md-2">
-                <h2 style="text-align: center;">Subtotal</h2>
-            </div>
-        </div>
-      <ProductItemComponent
-        v-for="product in selectedProducts"
-        :key="product.id"
-        :product="product"
-        @update-quantity="checkQuantity(product)"
-      />
+        <table class="table table-striped table-hover ">
+          <thead class="thead-dark">
+            <tr>
+              <th><h2>Productos</h2></th>
+              <th><h2>Cantidad</h2></th>
+              <th><h2>Precio</h2></th>
+              <th><h2>Subtotal</h2></th>
+              <th><h2>Acción</h2></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <ProductItemComponent
+              v-for="product in selectedProducts"
+              :key="product.id"
+              :product="product"
+              @update-quantity="checkQuantity(product)"
+            />
+          </tbody>
+
+        </table>
     </div>
   </template>
   
@@ -48,6 +49,7 @@
         },
 
         checkQuantity(product) {
+          console.log("checkquantityproduct", this.product);
           const selectedProduct = this.products.find(p => p.id === product.id)
           if(selectedProduct && selectedProduct.quantity < product.quantity) {
             this.$emit('quantity-exceeded', product);
