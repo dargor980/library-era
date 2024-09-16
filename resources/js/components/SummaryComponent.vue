@@ -20,19 +20,34 @@
             <button  class="btn btn-lg btn-success btn-block" @click="pay()">Pagar</button>
         </div>
       </div>
+
+      <ProductSearchModal
+        ref="productSearchModal"
+        :products="products"
+        @product-selected="handleProductSelected"
+      />
     </div>
+
   </template>
   
   <script>
 
   import Swal from 'sweetalert2';
+  import ProductSearchModal from './ProductSearchModal.vue';
 
   export default {
     name: 'SummaryComponent',
+    components: {
+      ProductSearchModal
+    },
     props: {
         total: {
             type: Number,
             required: true
+        },
+        products: {
+          type: Array,
+          required: true
         }
     },
     methods: {
@@ -40,15 +55,46 @@
         //TODO: IMPLEMENTAR
       },
       inputManually() {
-        //TODO: IMPLEMENTAR
+        this.$refs.productSearchModal.openModal();
+
+
+
+
+        // Swal.fire({
+        //   title: 'Agregar producto',
+        //   input: 'text',
+        //   inputLabel: 'Ingrese el código de barras o nombre del producto',
+        //   inputPlaceholder: 'Código de barras o nombre',
+        //   showCancelButton: true,
+        //   confirmButtonText: 'Agregar',
+        //   cancelButtonText: 'Cancelar',
+        //   inputValidator: (value) => {
+        //     if(!value) {
+        //       return 'Debe ingresar un código de barras o nombre del producto';
+        //     }
+        //   }
+        // }).then((result) => {
+        //   if(result.isConfirmed) {
+        //     const inputValue = result.value.trim();
+
+        //     this.$emit('manual-product-input', inputValue);
+        //   }
+        // });
       },
       clearCart() {
-        //TODO: IMPLEMENTAR
-      },
-      finalize() {
-        //TODO: IMPLEMENTAR
+        this.$emit('clear-cart');
       },
       pay() {
+        if(this.total === 0) {
+          Swal.fire({
+            title: "Venta no ingresada",
+            text: `Debe ingresar al menos un producto para registrar la venta`,
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+
+          return;
+        }
         
         Swal.fire({
           title: 'Método de pago',
@@ -136,7 +182,13 @@
           cashReceived: cashReceived,
           change: change
         });
+      },
+
+      handleProductSelected(product) {
+        this.$emit('manual-product-input', product);
       }
+
+
     }
   }
   </script>

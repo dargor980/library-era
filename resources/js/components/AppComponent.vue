@@ -16,8 +16,10 @@
             <SummaryComponent 
             class="container-margin"
             :total="total"
+            :products="products"
             @payment-completed="handlePaymentCompleted"
-            @clear-cart="clearCart"
+            @clear-cart="clearCart()"
+            @manual-product-input="handleManualProductInput"
         />
         </div>
       </div>
@@ -208,6 +210,50 @@
                 this.selectedProducts.splice(index, 1);
 
                 this.updateTotal();
+            }
+        },
+
+        handleManualProductInput(product) {
+            this.addProductToCart(product);
+            // let product = this.products.find(product => product.bar_code === inputValue);
+
+            // if(!product) {
+            //     product = this.products.find(product => product.name.toLowerCase() === inputValue.toLowerCase());
+            // }
+
+            // if(product) {
+            //     this.addProductToCart(product);
+            // } else {
+            //     Swal.fire({
+            //         title: 'Producto no encontrado',
+            //         text: 'El producto ingresado no existe. Por favor, verifique el código o nombre.',
+            //         icon: 'error',
+            //         confirmButtonText: 'OK'
+            //     });
+            // }
+        },
+
+        addProductToCart(product) {
+            const existingProduct = this.selectedProducts.find(p => p.id === product.id);
+
+            if (existingProduct) {
+                existingProduct.quantity +=1;
+                existingProduct.subtotal += existingProduct.price;
+
+                this.handleQuantityUpdate(existingProduct);
+            } else {
+                const newSelectedProduct = {
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    bar_code: product.bar_code,
+                    quantity: 1,
+                    subtotal: product.price,
+                };
+
+                this.selectedProducts.push(newSelectedProduct);
+
+                this.handleQuantityUpdate(newSelectedProduct);
             }
         }
     }
