@@ -18,7 +18,7 @@
                         <h3>Nueva Venta</h3>
                         <p>Crea una nueva venta de forma rápida y sencilla</p>
 
-                        <a class="btn btn-success btn-lg">Crear nueva venta</a>
+                        <a href="{{route('newSale')}}" class="btn btn-success btn-lg">Crear nueva venta</a>
                     </div>
 
                 </div>

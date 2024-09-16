@@ -24,7 +24,7 @@
       </td>
 
       <td class="text-center align-middle">
-        <button @click="" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+        <button @click="removeProduct()" class="btn btn-danger"><i class="fa fa-trash"></i></button>
       </td>
     </tr>
   </template>
@@ -46,6 +46,10 @@
     },
     truncateText(text, length) {
       return text.length > length ? text.substring(0, length) + '...' : text;
+    },
+    removeProduct() {
+      this.$emit("remove-product", this.product)
+
     }
   }
   }

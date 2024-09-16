@@ -9,6 +9,7 @@
                 :selected-products="selectedProducts"
                 @update-quantity="handleQuantityUpdate"
                 @quantity-exceeded="handleQuantityExceeded"
+                @remove-product="handleRemoveProduct"
             />
         </div>
         <div class="col-md-4 h-70">
@@ -51,7 +52,6 @@
     created() {
         axios.get('/sales/products-sale').then(res => {
             this.products = res.data;
-            console.log("products", this.products);
         });
     },
     beforeDestroy() {
@@ -66,7 +66,6 @@
                     confirmButtonText: 'OK'
             })
 
-            console.log("product", product);
             product.quantity -=1;
         },
         handleQuantityUpdate(updatedProduct) {
@@ -76,7 +75,6 @@
         },
 
         updateTotal() {
-            console.log("selected products update", this.selectedProducts);
             this.total = this.selectedProducts.reduce((acc, product) => {
                 return acc + product.subtotal;
             }, 0);
@@ -98,9 +96,7 @@
             barcode = barcode.replace("Clear", "");
     
             let product = this.products.find(product => product.bar_code == barcode);
-            console.log("product:", product);
             if(product) {
-                console.log("product id", product.id);
 
                 const newProduct = {
                     id: product.id,
@@ -160,10 +156,6 @@
                     }))
                 };
 
-                console.log(saleData);
-
-                
-
                 const response = await axios.post('/sales/complete', saleData);
     
                 if(response.status != 201) {
@@ -207,6 +199,16 @@
         clearCart() {
             this.selectedProducts = [];
             this.total = 0;
+        },
+
+        handleRemoveProduct(product) {
+            const index = this.selectedProducts.findIndex(p => p.id === product.id);
+
+            if(index !== -1) {
+                this.selectedProducts.splice(index, 1);
+
+                this.updateTotal();
+            }
         }
     }
   }

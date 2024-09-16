@@ -16,11 +16,8 @@
 
       </div>
       <div class="checkout row">
-        <div class="col-md-6">
-            <button class="btn btn-lg btn-success" @click="finalize">Finalizar</button>
-        </div>
-        <div class="col-md-6">
-            <button  class="btn btn-lg btn-success" @click="pay()">Pagar</button>
+        <div class="col-md-12">
+            <button  class="btn btn-lg btn-success btn-block" @click="pay()">Pagar</button>
         </div>
       </div>
     </div>

@@ -1945,7 +1945,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     var _this = this;
     axios.get('/sales/products-sale').then(function (res) {
       _this.products = res.data;
-      console.log("products", _this.products);
     });
   },
   beforeDestroy: function beforeDestroy() {
@@ -1959,7 +1958,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         icon: 'error',
         confirmButtonText: 'OK'
       });
-      console.log("product", product);
       product.quantity -= 1;
     },
     handleQuantityUpdate: function handleQuantityUpdate(updatedProduct) {
@@ -1967,7 +1965,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.updateTotal();
     },
     updateTotal: function updateTotal() {
-      console.log("selected products update", this.selectedProducts);
       this.total = this.selectedProducts.reduce(function (acc, product) {
         return acc + product.subtotal;
       }, 0);
@@ -1987,9 +1984,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       var product = this.products.find(function (product) {
         return product.bar_code == barcode;
       });
-      console.log("product:", product);
       if (product) {
-        console.log("product id", product.id);
         var newProduct = {
           id: product.id,
           name: product.name,
@@ -2049,13 +2044,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   };
                 })
               };
-              console.log(saleData);
-              _context.next = 5;
+              _context.next = 4;
               return axios.post('/sales/complete', saleData);
-            case 5:
+            case 4:
               response = _context.sent;
               if (!(response.status != 201)) {
-                _context.next = 9;
+                _context.next = 8;
                 break;
               }
               sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire({
@@ -2065,7 +2059,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 confirmButtonText: 'OK'
               });
               return _context.abrupt("return");
-            case 9:
+            case 8:
               _this2.selectedProducts = [];
               _this2.total = 0;
               sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire({
@@ -2074,10 +2068,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 icon: 'success',
                 confirmButtonText: 'OK'
               });
-              _context.next = 20;
+              _context.next = 19;
               break;
-            case 14:
-              _context.prev = 14;
+            case 13:
+              _context.prev = 13;
               _context.t0 = _context["catch"](0);
               errorMessage = 'Ha ocurrido un error. Por favor inténtelo nuevamente';
               if (_context.t0.response && _context.t0.response.data && _context.t0.response.data.message) {
@@ -2090,16 +2084,25 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 confirmButtonText: 'OK'
               });
               console.error(_context.t0);
-            case 20:
+            case 19:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 14]]);
+        }, _callee, null, [[0, 13]]);
       }))();
     },
     clearCart: function clearCart() {
       this.selectedProducts = [];
       this.total = 0;
+    },
+    handleRemoveProduct: function handleRemoveProduct(product) {
+      var index = this.selectedProducts.findIndex(function (p) {
+        return p.id === product.id;
+      });
+      if (index !== -1) {
+        this.selectedProducts.splice(index, 1);
+        this.updateTotal();
+      }
     }
   }
 });
@@ -2162,6 +2165,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     truncateText: function truncateText(text, length) {
       return text.length > length ? text.substring(0, length) + '...' : text;
+    },
+    removeProduct: function removeProduct() {
+      this.$emit("remove-product", this.product);
     }
   }
 });
@@ -2196,16 +2202,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     handleQuantityUpdate: function handleQuantityUpdate(updatedProduct) {
+      this.checkQuantity(updatedProduct);
       this.$emit('update-quantity', updatedProduct);
     },
     checkQuantity: function checkQuantity(product) {
-      console.log("checkquantityproduct", this.product);
       var selectedProduct = this.products.find(function (p) {
         return p.id === product.id;
       });
       if (selectedProduct && selectedProduct.quantity < product.quantity) {
         this.$emit('quantity-exceeded', product);
       }
+    },
+    handleRemoveProduct: function handleRemoveProduct(product) {
+      this.$emit('remove-product', product);
     }
   }
 });
@@ -2365,7 +2374,8 @@ var render = function render() {
     },
     on: {
       "update-quantity": _vm.handleQuantityUpdate,
-      "quantity-exceeded": _vm.handleQuantityExceeded
+      "quantity-exceeded": _vm.handleQuantityExceeded,
+      "remove-product": _vm.handleRemoveProduct
     }
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-4 h-70"
@@ -2505,7 +2515,9 @@ var render = function render() {
   }, [_c("button", {
     staticClass: "btn btn-danger",
     on: {
-      click: function click($event) {}
+      click: function click($event) {
+        return _vm.removeProduct();
+      }
     }
   }, [_c("i", {
     staticClass: "fa fa-trash"
@@ -2542,9 +2554,8 @@ var render = function render() {
         product: product
       },
       on: {
-        "update-quantity": function updateQuantity($event) {
-          return _vm.checkQuantity(product);
-        }
+        "update-quantity": _vm.handleQuantityUpdate,
+        "remove-product": _vm.handleRemoveProduct
       }
     });
   }), 1)])]);
@@ -2609,16 +2620,9 @@ var render = function render() {
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "checkout row"
   }, [_c("div", {
-    staticClass: "col-md-6"
+    staticClass: "col-md-12"
   }, [_c("button", {
-    staticClass: "btn btn-lg btn-success",
-    on: {
-      click: _vm.finalize
-    }
-  }, [_vm._v("Finalizar")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-6"
-  }, [_c("button", {
-    staticClass: "btn btn-lg btn-success",
+    staticClass: "btn btn-lg btn-success btn-block",
     on: {
       click: function click($event) {
         return _vm.pay();

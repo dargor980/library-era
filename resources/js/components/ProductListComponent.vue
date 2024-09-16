@@ -16,7 +16,8 @@
               v-for="product in selectedProducts"
               :key="product.id"
               :product="product"
-              @update-quantity="checkQuantity(product)"
+              @update-quantity="handleQuantityUpdate"
+              @remove-product="handleRemoveProduct"
             />
           </tbody>
 
@@ -44,16 +45,19 @@
     },
     methods: {
         handleQuantityUpdate(updatedProduct) {
-
+            this.checkQuantity(updatedProduct);
             this.$emit('update-quantity', updatedProduct);
         },
 
         checkQuantity(product) {
-          console.log("checkquantityproduct", this.product);
           const selectedProduct = this.products.find(p => p.id === product.id)
           if(selectedProduct && selectedProduct.quantity < product.quantity) {
             this.$emit('quantity-exceeded', product);
           }
+        },
+
+        handleRemoveProduct(product) {
+          this.$emit('remove-product', product);
         }
     }
 
