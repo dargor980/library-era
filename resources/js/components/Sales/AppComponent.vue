@@ -30,7 +30,6 @@
   import HeaderComponent from './HeaderComponent.vue';
   import ProductListComponent from './ProductListComponent.vue';
   import SummaryComponent from './SummaryComponent.vue';
-  import SelectedProduct from '../models/SelectedProduct';
   import Swal from 'sweetalert2';
   
   export default {
