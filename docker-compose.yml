@@ -39,11 +39,10 @@ services:
       - "3000:3000"
     volumes: 
       - grafana_data:/var/lib/grafana
+      - ./docker/grafana/grafana.ini:/etc/grafana/grafana.ini
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - app
-    networks:
-      - default
 volumes:
   grafana_data:
