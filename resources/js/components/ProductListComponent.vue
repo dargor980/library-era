@@ -1,27 +1,29 @@
 <template>
-    <div class="product-list-container card my-3 h-100">
-        <table class="table table-striped table-hover ">
-          <thead class="thead-dark">
-            <tr>
-              <th><h2>Productos</h2></th>
-              <th><h2>Cantidad</h2></th>
-              <th><h2>Precio</h2></th>
-              <th><h2>Subtotal</h2></th>
-              <th><h2>Acción</h2></th>
-            </tr>
-          </thead>
-
-          <tbody class="table-body-scroll">
-            <ProductItemComponent
-              v-for="product in selectedProducts"
-              :key="product.id"
-              :product="product"
-              @update-quantity="handleQuantityUpdate"
-              @remove-product="handleRemoveProduct"
-            />
-          </tbody>
-
-        </table>
+    <div class="card my-3 h-100">
+      <div class="product-list-container">
+          <table class="table table-striped table-hover ">
+            <thead class="thead-dark">
+              <tr>
+                <th><h2>Productos</h2></th>
+                <th><h2>Cantidad</h2></th>
+                <th><h2>Precio</h2></th>
+                <th><h2>Subtotal</h2></th>
+                <th><h2>Acción</h2></th>
+              </tr>
+            </thead>
+  
+            <tbody class="table-body-scroll">
+              <ProductItemComponent
+                v-for="product in selectedProducts"
+                :key="product.id"
+                :product="product"
+                @update-quantity="handleQuantityUpdate"
+                @remove-product="handleRemoveProduct"
+              />
+            </tbody>
+  
+          </table>
+      </div>
     </div>
   </template>
   

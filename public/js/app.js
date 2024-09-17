@@ -2651,7 +2651,9 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "product-list-container card my-3 h-100"
+    staticClass: "card my-3 h-100"
+  }, [_c("div", {
+    staticClass: "product-list-container"
   }, [_c("table", {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c("tbody", {
@@ -2667,7 +2669,7 @@ var render = function render() {
         "remove-product": _vm.handleRemoveProduct
       }
     });
-  }), 1)])]);
+  }), 1)])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

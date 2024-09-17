@@ -31,3 +31,19 @@ services:
       - ./cron/crontabs/:/var/spool/cron/crontabs/
     cap_add:
       - SYS_PTRACE
+  
+  grafana:
+    image: grafana/grafana:latest
+    container_name: "${COMPOSE_NAME}.grafana"
+    ports:
+      - "3000:3000"
+    volumes: 
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - app
+    networks:
+      - default
+volumes:
+  grafana_data:
