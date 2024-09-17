@@ -1912,7 +1912,8 @@ __webpack_require__.r(__webpack_exports__);
   name: 'AppDashboardComponent',
   data: function data() {
     return {
-      grafanaUrl: 'http://127.0.0.1:3000/d-solo/cdy4lzbvshfcwe/ventas-por-dia?orgId=1&from=1726518376487&to=1726539976487&panelId=1'
+      grafanaUrl: 'http://127.0.0.1:3000/public-dashboards/517ad51c497f4ac4ab394e198a59a745?orgId=1&kiosk&fullscreen',
+      monthlyStatistics: 'http://localhost:3000/public-dashboards/4edb8f5db3674a3e864c3b321ed0cc96?orgId=1&kiosk&fullscreen'
     };
   },
   mounted: function mounted() {},
@@ -2489,8 +2490,15 @@ var render = function render() {
   }, [_c("iframe", {
     attrs: {
       src: _vm.grafanaUrl,
-      width: "450",
-      height: "200",
+      width: "100%",
+      height: "100%",
+      frameborder: "0"
+    }
+  }), _vm._v(" "), _c("iframe", {
+    attrs: {
+      src: _vm.monthlyStatistics,
+      width: "100%",
+      height: "100%",
       frameborder: "0"
     }
   })]);
