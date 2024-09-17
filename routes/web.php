@@ -60,6 +60,10 @@ Route::post('/sales/new/create/add-product', 'SalesController@addProductToSale')
 Route::put('/sales/new/stock/update', 'SalesController@updateStock');
 Route::post('/sales/complete', 'SalesController@completeSale');
 
+
+//Dashboard
+Route::get('/dashboard', 'DashboardController@index');
+
 Route::group(['middleware' => 'admin'], function() {
     Route::get('/stock/new', 'StockController@show')->name('newStock');
    Route::post('/stock/new/update','StockController@update')->name('updatestock');

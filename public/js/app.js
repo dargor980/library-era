@@ -1911,7 +1911,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'AppDashboardComponent',
   data: function data() {
-    return {};
+    return {
+      grafanaUrl: 'http://127.0.0.1:3000/d-solo/cdy4lzbvshfcwe/ventas-por-dia?orgId=1&from=1726518376487&to=1726539976487&panelId=1'
+    };
   },
   mounted: function mounted() {},
   created: function created() {},
@@ -2482,7 +2484,16 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div");
+  return _c("div", {
+    staticClass: "grafana-dashboard"
+  }, [_c("iframe", {
+    attrs: {
+      src: _vm.grafanaUrl,
+      width: "450",
+      height: "200",
+      frameborder: "0"
+    }
+  })]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
