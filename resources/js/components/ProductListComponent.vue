@@ -74,8 +74,6 @@
       overflow-y: auto;
     }
 
-    
-
     .table-body-scroll {
       max-height: 90vh;
       overflow-y: auto;
