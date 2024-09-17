@@ -1,17 +1,13 @@
 <template>
     <div class="summary card my-3 h-100">
-      <h2>Total</h2>
-      <h2>{{ total }}<strong></strong></h2>
+      <h1>TOTAL</h1>
+      <h1>{{ total }}<strong></strong></h1>
       <div class="actions row">
-
-        <div class="col-md-4">
-            <button class="btn btn-lg btn-success" @click="scan"><i class="fa fa-barcode"></i></button>
+        <div class="col-md-6">
+            <button class="btn btn-lg btn-success btn-block" @click="inputManually"><i class="fa fa-keyboard-o"></i></button>
         </div>
-        <div class="col-md-4">
-            <button class="btn btn-lg btn-success" @click="inputManually"><i class="fa fa-keyboard-o"></i></button>
-        </div>
-        <div class="col-md-4">
-            <button  class="btn btn-lg btn-success" @click="clearCart"><i class="fa fa-trash-o"></i></button>
+        <div class="col-md-6">
+            <button  class="btn btn-lg btn-success btn-block" @click="clearCart"><i class="fa fa-trash-o"></i></button>
         </div>
 
       </div>
@@ -51,35 +47,8 @@
         }
     },
     methods: {
-      scan() {
-        //TODO: IMPLEMENTAR
-      },
       inputManually() {
         this.$refs.productSearchModal.openModal();
-
-
-
-
-        // Swal.fire({
-        //   title: 'Agregar producto',
-        //   input: 'text',
-        //   inputLabel: 'Ingrese el código de barras o nombre del producto',
-        //   inputPlaceholder: 'Código de barras o nombre',
-        //   showCancelButton: true,
-        //   confirmButtonText: 'Agregar',
-        //   cancelButtonText: 'Cancelar',
-        //   inputValidator: (value) => {
-        //     if(!value) {
-        //       return 'Debe ingresar un código de barras o nombre del producto';
-        //     }
-        //   }
-        // }).then((result) => {
-        //   if(result.isConfirmed) {
-        //     const inputValue = result.value.trim();
-
-        //     this.$emit('manual-product-input', inputValue);
-        //   }
-        // });
       },
       clearCart() {
         this.$emit('clear-cart');

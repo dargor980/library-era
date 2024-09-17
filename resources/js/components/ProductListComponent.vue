@@ -1,5 +1,5 @@
 <template>
-    <div class="product-list card my-3 h-100">
+    <div class="product-list-container card my-3 h-100">
         <table class="table table-striped table-hover ">
           <thead class="thead-dark">
             <tr>
@@ -11,7 +11,7 @@
             </tr>
           </thead>
 
-          <tbody>
+          <tbody class="table-body-scroll">
             <ProductItemComponent
               v-for="product in selectedProducts"
               :key="product.id"
@@ -67,5 +67,30 @@
   <style scoped>
     .product-list {
       padding: 20px;
+    }
+
+    .product-list-container {
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    
+
+    .table-body-scroll {
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .table-body-scroll::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .table-body-scroll::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 4px;
+    }
+
+    .table-body-scroll::-webkit-scrollbar-thumb:hover {
+      background-color: #aaa;
     }
   </style>

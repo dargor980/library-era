@@ -2044,12 +2044,17 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   };
                 })
               };
-              _context.next = 4;
+              if (paymentInfo.method === 'cash') {
+                saleData.payment_type = 'cash';
+              } else {
+                saleData.payment_type = 'transfer';
+              }
+              _context.next = 5;
               return axios.post('/sales/complete', saleData);
-            case 4:
+            case 5:
               response = _context.sent;
               if (!(response.status != 201)) {
-                _context.next = 8;
+                _context.next = 9;
                 break;
               }
               sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire({
@@ -2059,7 +2064,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 confirmButtonText: 'OK'
               });
               return _context.abrupt("return");
-            case 8:
+            case 9:
               _this2.selectedProducts = [];
               _this2.total = 0;
               sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire({
@@ -2068,10 +2073,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 icon: 'success',
                 confirmButtonText: 'OK'
               });
-              _context.next = 19;
+              _context.next = 20;
               break;
-            case 13:
-              _context.prev = 13;
+            case 14:
+              _context.prev = 14;
               _context.t0 = _context["catch"](0);
               errorMessage = 'Ha ocurrido un error. Por favor inténtelo nuevamente';
               if (_context.t0.response && _context.t0.response.data && _context.t0.response.data.message) {
@@ -2084,11 +2089,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 confirmButtonText: 'OK'
               });
               console.error(_context.t0);
-            case 19:
+            case 20:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 13]]);
+        }, _callee, null, [[0, 14]]);
       }))();
     },
     clearCart: function clearCart() {
@@ -2106,22 +2111,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     handleManualProductInput: function handleManualProductInput(product) {
       this.addProductToCart(product);
-      // let product = this.products.find(product => product.bar_code === inputValue);
-
-      // if(!product) {
-      //     product = this.products.find(product => product.name.toLowerCase() === inputValue.toLowerCase());
-      // }
-
-      // if(product) {
-      //     this.addProductToCart(product);
-      // } else {
-      //     Swal.fire({
-      //         title: 'Producto no encontrado',
-      //         text: 'El producto ingresado no existe. Por favor, verifique el código o nombre.',
-      //         icon: 'error',
-      //         confirmButtonText: 'OK'
-      //     });
-      // }
     },
     addProductToCart: function addProductToCart(product) {
       var existingProduct = this.selectedProducts.find(function (p) {
@@ -2350,32 +2339,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    scan: function scan() {
-      //TODO: IMPLEMENTAR
-    },
     inputManually: function inputManually() {
       this.$refs.productSearchModal.openModal();
-
-      // Swal.fire({
-      //   title: 'Agregar producto',
-      //   input: 'text',
-      //   inputLabel: 'Ingrese el código de barras o nombre del producto',
-      //   inputPlaceholder: 'Código de barras o nombre',
-      //   showCancelButton: true,
-      //   confirmButtonText: 'Agregar',
-      //   cancelButtonText: 'Cancelar',
-      //   inputValidator: (value) => {
-      //     if(!value) {
-      //       return 'Debe ingresar un código de barras o nombre del producto';
-      //     }
-      //   }
-      // }).then((result) => {
-      //   if(result.isConfirmed) {
-      //     const inputValue = result.value.trim();
-
-      //     this.$emit('manual-product-input', inputValue);
-      //   }
-      // });
     },
     clearCart: function clearCart() {
       this.$emit('clear-cart');
@@ -2499,7 +2464,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "app h-100"
+    staticClass: "app"
   }, [_c("HeaderComponent"), _vm._v(" "), _c("div", {
     staticClass: "main-content row flex-grow-1"
   }, [_c("div", {
@@ -2686,10 +2651,12 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "product-list card my-3 h-100"
+    staticClass: "product-list-container card my-3 h-100"
   }, [_c("table", {
     staticClass: "table table-striped table-hover"
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.selectedProducts, function (product) {
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", {
+    staticClass: "table-body-scroll"
+  }, _vm._l(_vm.selectedProducts, function (product) {
     return _c("ProductItemComponent", {
       key: product.id,
       attrs: {
@@ -2794,30 +2761,21 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "summary card my-3 h-100"
-  }, [_c("h2", [_vm._v("Total")]), _vm._v(" "), _c("h2", [_vm._v(_vm._s(_vm.total)), _c("strong")]), _vm._v(" "), _c("div", {
+  }, [_c("h1", [_vm._v("TOTAL")]), _vm._v(" "), _c("h1", [_vm._v(_vm._s(_vm.total)), _c("strong")]), _vm._v(" "), _c("div", {
     staticClass: "actions row"
   }, [_c("div", {
-    staticClass: "col-md-4"
+    staticClass: "col-md-6"
   }, [_c("button", {
-    staticClass: "btn btn-lg btn-success",
-    on: {
-      click: _vm.scan
-    }
-  }, [_c("i", {
-    staticClass: "fa fa-barcode"
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-4"
-  }, [_c("button", {
-    staticClass: "btn btn-lg btn-success",
+    staticClass: "btn btn-lg btn-success btn-block",
     on: {
       click: _vm.inputManually
     }
   }, [_c("i", {
     staticClass: "fa fa-keyboard-o"
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-4"
+    staticClass: "col-md-6"
   }, [_c("button", {
-    staticClass: "btn btn-lg btn-success",
+    staticClass: "btn btn-lg btn-success btn-block",
     on: {
       click: _vm.clearCart
     }
@@ -7228,7 +7186,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.app[data-v-cd268472] {\n  display: flex;\n  flex-direction: column;\n  height: 100%;\n}\n.main-content[data-v-cd268472] {\n  display: flex;\n  justify-content: space-between;\n}\n.container-margin[data-v-cd268472] {\n  margin-top: 1em;\n}\n", ""]);
+exports.push([module.i, "\n.app[data-v-cd268472] {\n  display: flex;\n  flex-direction: column;\n  height: 90%;\n}\n.main-content[data-v-cd268472] {\n  display: flex;\n  justify-content: space-between;\n}\n.container-margin[data-v-cd268472] {\n  margin-top: 1em;\n}\n", ""]);
 
 // exports
 
@@ -7285,7 +7243,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.product-list[data-v-3dc7c63b] {\n  padding: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.product-list[data-v-3dc7c63b] {\n  padding: 20px;\n}\n.product-list-container[data-v-3dc7c63b] {\n  max-height: 90vh;\n  overflow-y: auto;\n}\n.table-body-scroll[data-v-3dc7c63b] {\n  max-height: 90vh;\n  overflow-y: auto;\n}\n.table-body-scroll[data-v-3dc7c63b]::-webkit-scrollbar {\n  width: 8px;\n}\n.table-body-scroll[data-v-3dc7c63b]::-webkit-scrollbar-thumb {\n  background-color: #ccc;\n  border-radius: 4px;\n}\n.table-body-scroll[data-v-3dc7c63b]::-webkit-scrollbar-thumb:hover {\n  background-color: #aaa;\n}\n", ""]);
 
 // exports
 

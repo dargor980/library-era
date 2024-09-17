@@ -1,5 +1,5 @@
 <template>
-    <div class="app h-100">
+    <div class="app">
       <HeaderComponent />
       <div class="main-content row flex-grow-1">
         <div class="col-md-8 h-70">
@@ -158,6 +158,12 @@
                     }))
                 };
 
+                if(paymentInfo.method === 'cash') {
+                    saleData.payment_type = 'cash'
+                } else {
+                    saleData.payment_type = 'transfer';
+                }
+
                 const response = await axios.post('/sales/complete', saleData);
     
                 if(response.status != 201) {
@@ -215,22 +221,6 @@
 
         handleManualProductInput(product) {
             this.addProductToCart(product);
-            // let product = this.products.find(product => product.bar_code === inputValue);
-
-            // if(!product) {
-            //     product = this.products.find(product => product.name.toLowerCase() === inputValue.toLowerCase());
-            // }
-
-            // if(product) {
-            //     this.addProductToCart(product);
-            // } else {
-            //     Swal.fire({
-            //         title: 'Producto no encontrado',
-            //         text: 'El producto ingresado no existe. Por favor, verifique el código o nombre.',
-            //         icon: 'error',
-            //         confirmButtonText: 'OK'
-            //     });
-            // }
         },
 
         addProductToCart(product) {
@@ -264,7 +254,7 @@
   .app {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 90%;
   }
   .main-content {
     display: flex;

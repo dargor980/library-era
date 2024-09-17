@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ContentSale;
 use App\Http\Requests\NewSaleRequest;
+use App\PaymentType;
 use App\Product;
 use App\Sale;
 use App\Stock;
@@ -144,7 +145,8 @@ class SalesController extends Controller
 
         try {
             $sale = Sale::create([
-                'total' => $request->total
+                'total' => $request->total,
+                'payment_type_id' => PaymentType::PAYMENT_TYPE[$request->payment_type],
             ]);
 
             foreach($request->products as $req) {
