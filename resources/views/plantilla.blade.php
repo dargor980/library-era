@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js">
     <link rel="stylesheet" href="{{asset('css/icon/all.css')}}">
-    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <script src="{{ asset('js/app.js') }}" ></script>
 
 
       <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
@@ -14,6 +15,10 @@
       <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" defer></script>
       <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js" defer></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
     <title> @yield('titulo') | MiLibrería </title>
     <link rel="icon" href="{!! asset('logo.ico') !!}"/>
   </head>
@@ -137,10 +142,10 @@
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="">Lista de Proveedores</a>
+                        <a href="{{route('providerlist')}}">Lista de Proveedores</a>
                       </li>
                       <li>
-                        <a href="">Nuevo Proveedor</a>
+                        <a href="{{route('newprovider')}}">Nuevo Proveedor</a>
                       </li>
                     </ul>
                   </div>
@@ -273,7 +278,9 @@
     </script>
   {{--Script del reloj digital--}}
 
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   </body>
+
 
 @yield('scripts')
 

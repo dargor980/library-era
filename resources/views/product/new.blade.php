@@ -66,7 +66,7 @@
                 @error('category_id')
                     <div class="badge badge-danger float-right"> *Debe seleccionar una categoría </div>
                 @enderror
-                <select name='category_id' class="custom-select  mb-3">
+                <select name='category_id' class="custom-select  mb-3" id="category">
                     <option selected value="0">Seleccione una categoria:</option>
                     @foreach($categories as $item)
                     <option value="{{$item->id}}">{{$item->name}}</option>
@@ -76,7 +76,7 @@
                 @error('quantity')
                     <div class="badge badge-danger float-right"> *El Stock es obligatorio </div>
                 @enderror
-                <div class="input-group form-group">
+                <div class="input-group form-group my-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa fa-archive"></i></span>
                     </div>
@@ -86,7 +86,7 @@
                 @error('unit_type_id')
                     <div class="badge badge-danger float-right"> *Debe seleccionar una unidad de medida</div>
                 @enderror
-                <select name='unit_type_id' class="custom-select  mb-3">
+                <select name='unit_type_id' class="custom-select  mb-4" id="unit-type">
                     <option selected value="0">Seleccione Unidad de Medida:</option>
                     @foreach($unitTypes as $item)
                     <option value="{{$item->id}}">{{$item->name}}</option>  
@@ -94,9 +94,19 @@
                 </select>
 
                 <br>
-                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fa fa-plus"></i> Agregar</button>
+                <button class="btn btn-success my-3 text-white" type="submit"><i class="fa fa-plus"></i> Agregar</button>
             </form>
         </div>
     </div> 
 </div>
+@endsection
+
+@section('scripts')
+<script>
+
+    $(document).ready(function() {
+        $('#unit-type').select2();
+        $('#category').select2();
+    });
+</script>
 @endsection

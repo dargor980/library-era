@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ProviderProduct extends Model
 {
+    protected $fillable = ['id', 'provider_id', 'product_id'];
     
     public function provider()
     {

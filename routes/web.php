@@ -60,6 +60,16 @@ Route::post('/sales/new/create/add-product', 'SalesController@addProductToSale')
 Route::put('/sales/new/stock/update', 'SalesController@updateStock');
 Route::post('/sales/complete', 'SalesController@completeSale');
 
+//Providers
+Route::get('/providers/new', 'ProviderController@create')->name('newprovider');
+Route::post('/providers/new/add', 'ProviderController@store')->name('addProvider');
+Route::get('/providers', 'ProviderController@index')->name('providerlist');
+Route::get('/providers/get-providers', 'ProviderController@getProviders')->name('getProviders');
+Route::get('/providers/details/{id}', 'ProviderController@show')->name('detailProvider');
+Route::get('/providers/edit/{id}', 'ProviderController@edit')->name('editProvider');
+Route::get('/providers/delete/{id}', 'ProviderController@destroy')->name('deleteProvider');
+Route::put('/providers/edit/{id}', 'ProviderController@update')->name('updateProvider');
+
 
 //Dashboard
 Route::get('/dashboard', 'DashboardController@index');

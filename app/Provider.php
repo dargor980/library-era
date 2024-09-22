@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Provider extends Model
 {
+
+    protected $fillable = ['id', 'name', 'company', 'phone', 'email', 'address', 'description'];
     
     public function providerProduct()
     {
