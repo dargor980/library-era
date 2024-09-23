@@ -27,7 +27,7 @@
                     @error('stock_id')
                         <div class="badge badge-danger float-right">*Debe seleccionar un producto </div>
                     @enderror
-                    <select name='stock_id' class="custom-select my-2">
+                    <select name='stock_id' class="custom-select my-2" id="stock">
                         <option selected value="0">Seleccione producto:</option>
                         @foreach($products as $item)
                         <option value="{{$item->stock_id}}">{{$item->name}}</option>
@@ -82,4 +82,13 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+
+    $(document).ready(function() {
+        $('#stock').select2();
+    });
+</script>
 @endsection
