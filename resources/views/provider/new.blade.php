@@ -70,7 +70,7 @@
                     <textarea name='description' id=""  placeholder="Descripcion" class="form-control"></textarea>
                 </div>
                 <br>
-                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-paper-plane text-white"></i> Enviar</button>
+                <button class="btn mb-3 text-white" type="submit" style="background: #bd0003;"><i class="fas fa-paper-plane text-white"></i> Enviar</button>
             </form>
         </div>
     </div> 

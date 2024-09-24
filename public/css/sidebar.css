@@ -493,6 +493,10 @@
     background: rgba(193, 163, 114, 0.9) ;
   }
 
+  .custom-btn {
+    background-color: #bd0003 !important;
+  }
+
   .card5{
     background: rgba(227, 214, 191, 0.9)!important;
   }
@@ -510,7 +514,7 @@
   }
 
   .modal-content{
-    background: rgba(21, 107, 79, 0.9) !important;
+    background: #7f0000 !important;
   }
 
   .table{
@@ -548,25 +552,25 @@
   }
 
   .card1{
-    background: rgba(255,255,255,0.7) !important;
+    background: #7f0000 !important;
   }
 
   .card2{
-    background: rgba(21, 107, 79, 0.6) !important;
+    background: #7f0000 !important;
   }
 
   .card3{
-    background: rgba(21, 107, 79, 0.6) !important;
+    background: #7f0000 !important;
     border-radius: 10px !important;
   }
 
   .card4{
-    background: rgba(248, 243, 167, 0.85) !important;
+    background: #7f0000 !important;
     border-radius: 15px !important;
   }
 
   .card6{
-    background: rgba(20, 167, 118, 0.6) !important;
+    background: #7f0000 !important;
     border-radius: 10px !important;
   }
 

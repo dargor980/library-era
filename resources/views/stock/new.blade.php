@@ -43,7 +43,7 @@
                        
                         <input name='quantity' type="number" min="0" placeholder="Cantidad de Stock" class="form-control"> 
                     </div>
-                    <button class="btn btn-success text-white mt-2" type="submit"><i class="fas fa-cash-register"></i> Enviar</button>
+                    <button class="btn  text-white mt-2" type="submit" style="background: #bd0003;"><i class="fas fa-cash-register"></i> Enviar</button>
                 </form>
             </div>
             <div class="col-md-1"></div>

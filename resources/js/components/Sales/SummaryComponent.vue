@@ -4,16 +4,16 @@
       <h1>{{ total }}<strong></strong></h1>
       <div class="actions row">
         <div class="col-md-6">
-            <button class="btn btn-lg btn-success btn-block" @click="inputManually"><i class="fa fa-keyboard-o"></i></button>
+            <button class="btn btn-lg custom-button btn-block" @click="inputManually" style="background-color: #bd0003;"><i class="fa fa-keyboard-o"></i></button>
         </div>
         <div class="col-md-6">
-            <button  class="btn btn-lg btn-success btn-block" @click="clearCart"><i class="fa fa-trash-o"></i></button>
+            <button  class="btn btn-lg custom-button btn-block" @click="clearCart" style="background-color: #bd0003;"><i class="fa fa-trash-o"></i></button>
         </div>
 
       </div>
       <div class="checkout row">
         <div class="col-md-12">
-            <button  class="btn btn-lg btn-success btn-block" @click="pay()">Pagar</button>
+            <button  class="btn btn-lg custom-button btn-block" @click="pay()" style="background-color: #bd0003;">Pagar</button>
         </div>
       </div>
 
@@ -172,5 +172,10 @@
   .checkout button {
     margin-right: 10px;
     margin-top: 10px;
+  }
+
+  .custom-button {
+    background: #bd0003;
+    color: white;
   }
   </style>

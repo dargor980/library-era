@@ -2,8 +2,8 @@
     <div class="card my-3 h-100">
       <div class="product-list-container">
           <table class="table table-striped table-hover ">
-            <thead class="thead-dark">
-              <tr>
+            <thead class="" style="background: #3c0000;">
+              <tr style="color: white;">
                 <th><h2>Productos</h2></th>
                 <th><h2>Cantidad</h2></th>
                 <th><h2>Precio</h2></th>

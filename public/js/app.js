@@ -2735,8 +2735,14 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("thead", {
-    staticClass: "thead-dark"
-  }, [_c("tr", [_c("th", [_c("h2", [_vm._v("Productos")])]), _vm._v(" "), _c("th", [_c("h2", [_vm._v("Cantidad")])]), _vm._v(" "), _c("th", [_c("h2", [_vm._v("Precio")])]), _vm._v(" "), _c("th", [_c("h2", [_vm._v("Subtotal")])]), _vm._v(" "), _c("th", [_c("h2", [_vm._v("Acción")])])])]);
+    staticStyle: {
+      background: "#3c0000"
+    }
+  }, [_c("tr", {
+    staticStyle: {
+      color: "white"
+    }
+  }, [_c("th", [_c("h2", [_vm._v("Productos")])]), _vm._v(" "), _c("th", [_c("h2", [_vm._v("Cantidad")])]), _vm._v(" "), _c("th", [_c("h2", [_vm._v("Precio")])]), _vm._v(" "), _c("th", [_c("h2", [_vm._v("Subtotal")])]), _vm._v(" "), _c("th", [_c("h2", [_vm._v("Acción")])])])]);
 }];
 render._withStripped = true;
 
@@ -2828,7 +2834,10 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col-md-6"
   }, [_c("button", {
-    staticClass: "btn btn-lg btn-success btn-block",
+    staticClass: "btn btn-lg custom-button btn-block",
+    staticStyle: {
+      "background-color": "#bd0003"
+    },
     on: {
       click: _vm.inputManually
     }
@@ -2837,7 +2846,10 @@ var render = function render() {
   })])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("button", {
-    staticClass: "btn btn-lg btn-success btn-block",
+    staticClass: "btn btn-lg custom-button btn-block",
+    staticStyle: {
+      "background-color": "#bd0003"
+    },
     on: {
       click: _vm.clearCart
     }
@@ -2848,7 +2860,10 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col-md-12"
   }, [_c("button", {
-    staticClass: "btn btn-lg btn-success btn-block",
+    staticClass: "btn btn-lg custom-button btn-block",
+    staticStyle: {
+      "background-color": "#bd0003"
+    },
     on: {
       click: function click($event) {
         return _vm.pay();
@@ -7343,7 +7358,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.summary[data-v-6def81e5] {\n  padding: 20px;\n}\n.actions button[data-v-6def81e5] {\n  margin-right: 10px;\n}\n.checkout button[data-v-6def81e5] {\n  margin-right: 10px;\n  margin-top: 10px;\n}\n", ""]);
+exports.push([module.i, "\n.summary[data-v-6def81e5] {\n  padding: 20px;\n}\n.actions button[data-v-6def81e5] {\n  margin-right: 10px;\n}\n.checkout button[data-v-6def81e5] {\n  margin-right: 10px;\n  margin-top: 10px;\n}\n.custom-button[data-v-6def81e5] {\n  background: #bd0003;\n  color: white;\n}\n", ""]);
 
 // exports
 
