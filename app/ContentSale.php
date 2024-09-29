@@ -36,11 +36,11 @@ class ContentSale extends Model
     
     public function product()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'id', 'product_id');
     }
 
     public function sale()
     {
-        return $this->hasMany(Sale::class);
+        return $this->hasMany(Sale::class, 'id', 'sale_id');
     }
 }

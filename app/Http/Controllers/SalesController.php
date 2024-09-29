@@ -8,6 +8,7 @@ use App\PaymentType;
 use App\Product;
 use App\Sale;
 use App\Stock;
+use App\UnitType;
 use Exception;
 use Illuminate\Http\Request;
 use Log;
@@ -31,13 +32,9 @@ class SalesController extends Controller
         $sales = Sale::select('*')->orderBy('id', 'DESC');
 
         return DataTables::of($sales)
-            ->addColumn('link', function($sale){
-                return '<a href="/sales/detail/'. $sale->id . '"> aaaa</a>';
-            })
             ->addColumn('created_at', function($sale) {
                 return $sale->created_at->format('Y-m-d');
             })
-            ->rawColumns(['link'])
             ->make(true)
         ;
     }
@@ -53,7 +50,7 @@ class SalesController extends Controller
 
         return $products;
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -117,7 +114,7 @@ class SalesController extends Controller
     }
 
 
-    public function updateStock(Request $request) 
+    public function updateStock(Request $request)
     {
         try {
             foreach($request->all() as $req) {
@@ -158,7 +155,7 @@ class SalesController extends Controller
 
                 $quantity = $req['quantity'] ?? 0;
 
-                
+
                 $stock = Stock::find($product->stock_id);
 
 
@@ -199,7 +196,27 @@ class SalesController extends Controller
      */
     public function show($id)
     {
-        //
+        // try{
+
+            $products = ContentSale::with(['product', 'sale'])
+                ->where('sale_id', '=', $id)
+                ->get();
+
+
+            $unitTypes = UnitType::all();
+
+            $sale = Sale::findOrFail($id);
+
+
+            return view('sales.details', compact('products','unitTypes', 'sale'));
+
+        // }catch(Exception $e){
+        //     Log::channel('sales')->error('Error al obtener datos de la venta: ');
+        //     Log::channel('sales')->error($e->getMessage());
+        //     Log::channel('sales')->error($e->getTraceAsString());
+
+        //     return back()->with('error', 'Hubo un error al mostrar la venta. Intente nuevamente.');
+        // }
     }
 
     /**

@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Sale extends Model
 {
-    protected $fillable = ['id', 'total', 'payment_type_id'];
+    protected $fillable = ['id', 'total', 'payment_type_id', 'created_at'];
     
     public function content()
     {

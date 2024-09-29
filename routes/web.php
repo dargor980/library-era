@@ -59,6 +59,7 @@ Route::post('/sales/new/create', 'SalesController@store');
 Route::post('/sales/new/create/add-product', 'SalesController@addProductToSale');
 Route::put('/sales/new/stock/update', 'SalesController@updateStock');
 Route::post('/sales/complete', 'SalesController@completeSale');
+Route::get('/sales/{id}/show', 'SalesController@show');
 
 //Providers
 Route::get('/providers/new', 'ProviderController@create')->name('newprovider');

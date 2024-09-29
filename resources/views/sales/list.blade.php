@@ -38,12 +38,10 @@
         <thead>
           <tr class="boton text-white">
             <th scope="col">N°</th>
-            <th scope="col">Estado</th>
             <th scope="col">Medio de pago</th>
-            <th scope="col">Cliente</th>
             <th scope="col">Fecha</th>
             <th scope="col">Total</th>
-            <th scope="col">Eliminar</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -69,7 +67,7 @@
                     columnDefs: [
                         {
                             searchable: false,
-                            targets: [1,2,3,6],
+                            targets: [1,2,3, 4],
                         }
                     ],
 
@@ -77,40 +75,26 @@
                     columns: [
                         {data: 'id', name: 'id'},
                         {
-                            data: 'estado',
+                            data: 'payment_type_id',
+                            name: 'payment_type_id',
                             render: function(data){
-                                if(data == '0'){
-                                    return 'Pendiente'
+                                if(data == 1){
+                                    return 'Efectivo'
                                 }else{
-                                    return 'Pagado'
+                                    return 'Transferencia'
                                 }
                             }
 
                         },
-                        {
-                            data: 'metodopago',
-                            render: function(data){
-                                if(data == '1'){
-                                    return 'Efectivo';
-                                }
-                                if(data == '2'){
-                                    return 'Transferencia';
-                                }
-                                if(data == '3'){
-                                    return 'Tarjeta';
-                                }
-                            }
-                        },
-                        {data: 'link', name: 'link'},
                         {data: 'created_at', name: 'created_at'},
                         {data: 'total', name: 'total'},
                         {
-                            data: 'id',
-                            render: function(data){
-                                return `<span><a href="/pedido/lista/delete/${data}"><i class="fas fa-trash-alt text-danger"></i></a></span>`
-                            }
-
+                        data: 'id',
+                        render: function(data){
+                            return `<span><a href="/sales/${data}/show"><i class="fas fa-eye text-success"></i>&nbsp;</a></span>
+                            `
                         }
+                    },
 
                     ],
                     responsive:{
@@ -118,7 +102,7 @@
                             display: $.fn.dataTable.Responsive.display.modal( {
                                 header: function ( row ) {
                                     var data = row.data();
-                                    return 'Details for '+data[0]+' '+data[1];
+                                    return 'Detalles para '+data[0]+' '+data[1];
                                 }
                             } ),
                             renderer: $.fn.dataTable.Responsive.renderer.tableAll()
