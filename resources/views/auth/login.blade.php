@@ -3,75 +3,78 @@
 @section('titulo', 'Libreria (nombre pendiente)')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card card5">
-                <div class="card-header text-center">
-                    <h3>{{ __('Inicio de sesión') }}</h3>
-                </div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
 
-                        <div class="form-group row">
-                            
-                            <div class="col-md-8 offset-md-2">
-                                <label for="email" class=" col-form-label text-md-right ">{{ __('Usuario (email)') }}</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            
-                            <div class="col-md-8 offset-md-2">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                                <label for="password" class="col-form-label text-md-right ">{{ __('Contraseña') }}</label>
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-8 offset-md-2">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Recordarme') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-2">
-                                <button type="submit" class="btn btn-login btn-lg btn-block">
-                                    {{ __('Iniciar Sesión') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('¿Olvidaste tu contraseña?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+<section class="login-block">
+    <div class="container">
+	<div class="row">
+		<div class="col-md-4 login-sec">
+		    <h2 class="text-center">Inicio de Sesión</h2>
+		    <form class="login-form" method="POST" action="{{route('login')}}">
+                @csrf
+  <div class="form-group">
+    <label for="email" class="text-uppercase">Email</label>
+    <input id=email" type="email" name="email"  value="{{ old('email') }}" required autocomplete="email" autofocus class="form-control" placeholder="">
+    
+  </div>
+  <div class="form-group">
+    <label for="password" class="text-uppercase">Contraseña</label>
+    <input type="password" class="form-control" id="password" name="password"  required autocomplete="current-password">
+  </div>
+  
+  
+    <div class="form-check">
+    <label class="form-check-label">
+      <input type="checkbox" name="remember" id="remember" class="form-check-input"  {{ old('remember') ? 'checked' : '' }}>
+      <small>Recordarme</small>
+    </label>
+    <button type="submit" class="btn btn-login float-right">Iniciar Sesión</button>
+  </div>
+  
+</form>
+<div class="copy-text">Created with <i class="fa fa-heart"></i> by dargor980</div>
+		</div>
+		<div class="col-md-8 banner-sec">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                 <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                  </ol>
+            <div class="carousel-inner" role="listbox">
+    <div class="carousel-item active">
+      <img class="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide">
+      <div class="carousel-caption d-none d-md-block">
+        <div class="banner-text">
+            <h2>Administra tus ventas</h2>
+            <p>Lleva el control exacto de tus ventas, productos y proveedores</p>
+        </div>	
+  </div>
     </div>
+    <div class="carousel-item">
+      <img class="d-block img-fluid" src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="First slide">
+      <div class="carousel-caption d-none d-md-block">
+        <div class="banner-text">
+            <h2>Maximiza tus Ganancias</h2>
+            <p>Ten acceso a un dashboard de estadísticas que te ayudarán a maxmizar tus ganancias y minimizar costos. </p>
+        </div>	
+    </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide">
+      <div class="carousel-caption d-none d-md-block">
+        <div class="banner-text">
+            <h2>¿Necesitas ayuda?</h2>
+            <p>Contáctate a través del siguiente email: <a href="mailto:german.contrerasa@utem.cl">german.contrerasa@utem.cl</a></a></p>
+        </div>	
+    </div>
+  </div>
+            </div>	   
+		    
+		</div>
+	</div>
 </div>
+</section>
+
 @endsection
