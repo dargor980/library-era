@@ -57,6 +57,14 @@
                             <div class="col-md-2"></div>
                         </div>
                     </div>
+                    <div class="my-2">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-5 text-white"><h5>Codigo de barras:</h5></div>
+                            <div class="card card1 col-md-3 pl-0 text-center"><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($product->bar_code, 'EAN13') }}" alt="Código de barras" /></div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
                 </div>
             <div class="col-md-3"></div>
         </div>

@@ -76,4 +76,25 @@ class Product extends Model
     {
         return $this->hasMany(Category::class, 'id', 'category_id');
     }
+
+    public static function generateEAN13BarCodeNumber()
+    {
+        $code = str_pad(mt_rand(0, 999999999999), 12, '0', STR_PAD_LEFT);
+        $sum = 0;
+
+        for ($i = 0; $i < 12; $i++) {
+            $digit = (int) $code[$i];
+            $sum += ($i % 2 === 0) ? $digit : $digit * 3;
+        }
+
+        $checksum = (10 - ($sum % 10)) % 10;
+
+        $ean13 = $code . $checksum;
+
+        if(self::where('bar_code', $ean13)->exists()) {
+            return self::generateEAN13BarCodeNumber();
+        }
+
+        return $ean13;
+    }
 }

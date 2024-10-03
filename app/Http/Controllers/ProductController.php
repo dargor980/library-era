@@ -69,6 +69,8 @@ class ProductController extends Controller
                 'quantity' => $request->quantity,
             ]);
 
+            $barCode = $request->bar_code ?? Product::generateEAN13BarCodeNumber();
+
             Product::create([
                 'name' => $request->name,
                 'price' => $request->price,
@@ -77,7 +79,7 @@ class ProductController extends Controller
                 'stock_id' => $stock->id,
                 'cost' => $request->cost,
                 'profit' => $request->price - $request->cost,
-                'bar_code' => $request->bar_code,
+                'bar_code' => $barCode,
             ]);
 
             DB::commit();
