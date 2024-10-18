@@ -43,15 +43,15 @@
 
 
 
-    <div class="page-wrapper chiller-theme toggled">
+    <div class="page-wrapper chiller-theme @unless(Route::currentRouteName() == 'newSale') toggled @endunless">
         <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
           <i class="fa fa-bars"></i>
         </a>
         <nav id="sidebar" class="sidebar-wrapper">
           <div class="sidebar-content">
             <div class="sidebar-brand sidebartitulo shadow-sm">
-                <img src="/img/comida.png" class="icono" alt="">
-                <a href="{{route('home')}}" class="ml-3">Mi Librería</a>
+                <img src="/logo.svg" class="icono" alt="">
+                <a href="{{route('home')}}" class="ml-3">Librería "EL OSO"</a>
               <div id="close-sidebar">
                 <i class="fa fa-times"></i>
               </div>
@@ -178,10 +178,7 @@
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="">Historial de Ventas</a>
-                      </li>
-                      <li>
-                        <a href="">Clientes Frecuentes</a>
+                        <a href="{{ route('dashboard') }}">Historial de Ventas</a>
                       </li>
                       <li>
                         <a href="">Mas Vendidos</a>

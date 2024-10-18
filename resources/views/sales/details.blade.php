@@ -10,7 +10,7 @@
     <hr class="bg-light">
     <div class="row">
         <div class="col-md-3">
-             <img src="/comidapdf.png" style="height: 100px;" alt="">
+             <img src="/logo.svg" style="height: 100px;" alt="">
         </div>
         <div class="col-md-9">
             <div class="float-right">
@@ -19,7 +19,7 @@
                 @if($sale->payment_type == 1)<div>Método de pago:  Efectivo</div>@endif
                 @if($sale->metodopago == 2)<div>Método de pago:  Transferencia</div>@endif
             </div>
-             <h2 class="titulo textcolor">Librería (nombre pendiente)</h2>
+             <h2 class="titulo textcolor">Librería "El Oso"</h2>
              <div>Av. Garibaldi 1227, Batuco</div>
              <div>(insertar numero)</div>
              <div>libreria@gmail.com</div>
@@ -69,7 +69,7 @@
         </h6>
         <hr class="bg-light">
         <div class="text-center">
-            Libreria (insertar nombre) /  +569 3096 5828
+            Libreria "El Oso" /  +569 3096 5828
         </div>
     </div>
 </div>

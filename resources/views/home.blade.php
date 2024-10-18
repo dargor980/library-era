@@ -35,7 +35,7 @@
                         <h3>Inventario</h3>
                         <p>Gestiona tu inventario de forma eficiente</p>
 
-                        <a class="btn btn-success btn-lg">Agregar stock</a>
+                        <a class="btn btn-success btn-lg" style="color: #fff;">Agregar stock</a>
                     </div>
 
                 </div>

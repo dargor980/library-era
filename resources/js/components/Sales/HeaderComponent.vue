@@ -1,6 +1,11 @@
 <template>
     <div class="header">
-      <h1>Nueva Venta</h1>
+      <div>
+        <img src="/logo.svg" class="icono">
+      </div>
+      <div>
+        <h1 class="ml-3">Nueva Venta</h1>
+      </div>
     </div>
   </template>
   
@@ -13,6 +18,8 @@
   <style scoped>
   .header {
     background-color: #000;
+    display: flex;
+    vertical-align: center;
     color: #fff;
     padding: 10px;
   }

@@ -73,7 +73,7 @@ Route::put('/providers/edit/{id}', 'ProviderController@update')->name('updatePro
 
 
 //Dashboard
-Route::get('/dashboard', 'DashboardController@index');
+Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
 
 Route::group(['middleware' => 'admin'], function() {
     Route::get('/stock/new', 'StockController@show')->name('newStock');
