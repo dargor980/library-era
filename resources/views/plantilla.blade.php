@@ -14,7 +14,7 @@
     
     
     <title> @yield('titulo') | MiLibrería </title>
-    <link rel="icon" href="{!! asset('logo.ico') !!}"/>
+    <link rel="icon" href="/logo.svg"/>
   </head>
   <body class="fondobody" onload="startTime()" style="background: #f5e1ce;">
     

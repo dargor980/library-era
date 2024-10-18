@@ -20,12 +20,14 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
     <link href="{{asset('css/login.css')}}" rel="stylesheet">
+    <link rel="icon" href="/logo.svg"/>
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbargeneral shadow-sm">
-            <div class="container justify-content-center">
-                <a class="navbar-brand" href="{{ url('/') }}">MiLibrería
+            <div class="container justify-content-center my-3 py-3">
+                <img src="/logo.svg" class="icono">
+                <a class="navbar-brand ml-3" href="{{ url('/') }}">Librería "El Oso"
                 </a>
             </div>
         </nav>
