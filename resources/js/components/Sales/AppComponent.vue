@@ -3,8 +3,8 @@
       <HeaderComponent />
       <div class="main-content row flex-grow-1">
         <div class="col-md-8 h-70">
-            <ProductListComponent 
-                class="container-margin" 
+            <ProductListComponent
+                class="container-margin"
                 :products="products"
                 :selected-products="selectedProducts"
                 @update-quantity="handleQuantityUpdate"
@@ -13,7 +13,7 @@
             />
         </div>
         <div class="col-md-4 h-70">
-            <SummaryComponent 
+            <SummaryComponent
             class="container-margin"
             :total="total"
             :products="products"
@@ -25,13 +25,13 @@
       </div>
     </div>
   </template>
-  
+
   <script>
   import HeaderComponent from './HeaderComponent.vue';
   import ProductListComponent from './ProductListComponent.vue';
   import SummaryComponent from './SummaryComponent.vue';
   import Swal from 'sweetalert2';
-  
+
   export default {
     name: 'AppComponent',
     components: {
@@ -93,9 +93,10 @@
         },
 
         addProductByBarcode(barcode) {
-       
-            barcode = barcode.replace("Clear", "");
-    
+
+            //ELimina todo lo que venga antes del codigo de barras escaneado con la pistola
+            barcode = barcode.replace(/\D/g, '');
+
             let product = this.products.find(product => product.bar_code == barcode);
             if(product) {
 
@@ -126,7 +127,7 @@
                     this.selectedProducts.push(newSelectedProduct);
 
                     this.handleQuantityUpdate(newSelectedProduct);
-                } 
+                }
             } else {
                 Swal.fire({
                     title: 'Producto no encontrado',
@@ -135,12 +136,12 @@
                     confirmButtonText: 'OK'
                 })
             }
-    
+
         },
 
         checkStock(product) {
             const selectedProduct = this.products.find(p => p.id === product.id);
-            
+
             if(selectedProduct && selectedProduct.quantity < product.quantity) {
                 this.handleQuantityExceeded(product);
             }
@@ -164,7 +165,7 @@
                 }
 
                 const response = await axios.post('/sales/complete', saleData);
-    
+
                 if(response.status != 201) {
                     Swal.fire({
                         title: 'Error',
@@ -177,7 +178,7 @@
 
                 this.selectedProducts = [];
                 this.total = 0;
-    
+
                 Swal.fire({
                     title: 'Pago Completado',
                     text: `El pago se ha registrado correctamente mediante ${paymentInfo.method === 'cash' ? 'Efectivo' : 'Transferencia'}.`,
@@ -248,7 +249,7 @@
     }
   }
   </script>
-  
+
   <style scoped>
   .app {
     display: flex;
@@ -263,4 +264,3 @@
     margin-top: 1em;
   }
   </style>
-  
