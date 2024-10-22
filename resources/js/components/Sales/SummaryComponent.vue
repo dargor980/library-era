@@ -1,5 +1,5 @@
 <template>
-    <div class="summary card my-3 h-100">
+    <div class="summary card my-3 h-100 d-flex flex-column">
       <h1>TOTAL</h1>
       <h1>{{ total }}<strong></strong></h1>
       <div class="actions row">
@@ -22,6 +22,10 @@
         :products="products"
         @product-selected="handleProductSelected"
       />
+
+      <div class="my-5 ml-auto">
+        <img src="/bear.gif">
+      </div>
     </div>
 
   </template>
