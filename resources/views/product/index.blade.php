@@ -46,6 +46,7 @@
           <tr class="boton text-white">
             <th scope="col">Cod.</th>
             <th scope="col">Nombre</th>
+            <th scope="col">Código de barras</th>
             <th scope="col">Precio</th>
             <th scope="col">Medida</th>
             <th scope="col">Categoria</th>
@@ -90,6 +91,7 @@
                         },
                         name: 'name'
                     },
+                    {data: 'bar_code', name: 'bar_code'},
                     {data: 'price', name: 'price'},
                     {data: 'unit_type[0].name', name: 'unit_tyype[0].name'},
                     {data: 'category[0].name', name: 'category[0].name'},
