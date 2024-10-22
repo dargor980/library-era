@@ -83,7 +83,13 @@
                 ],
                 columns: [
                     {data: 'id', name: 'id'},
-                    {data: 'name', name: 'name'},
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return `<a href="/product/details/${row.id}">${row.name}</a>`;
+                        },
+                        name: 'name'
+                    },
                     {data: 'price', name: 'price'},
                     {data: 'unit_type[0].name', name: 'unit_tyype[0].name'},
                     {data: 'category[0].name', name: 'category[0].name'},
