@@ -2002,13 +2002,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }
     },
     addProductByBarcode: function addProductByBarcode(barcode) {
-      //ELimina todo lo que venga antes del codigo de barras escaneado con la pistola 
+      //ELimina todo lo que venga antes del codigo de barras escaneado con la pistola
       barcode = barcode.replace(/\D/g, '');
-      console.log("barcode", barcode);
       var product = this.products.find(function (product) {
         return product.bar_code == barcode;
       });
-      console.log("product", product);
       if (product) {
         var newProduct = {
           id: product.id,
@@ -2036,7 +2034,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           this.handleQuantityUpdate(newSelectedProduct);
         }
       } else {
-        console.log("producto no encontrado");
         sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
           title: 'Producto no encontrado',
           text: 'Registre el producto o intente nuevamente',
@@ -2099,15 +2096,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 icon: 'success',
                 confirmButtonText: 'OK'
               });
-              _context.next = 20;
+              _context.next = 19;
               break;
             case 14:
               _context.prev = 14;
               _context.t0 = _context["catch"](0);
               errorMessage = 'Ha ocurrido un error. Por favor inténtelo nuevamente';
-              if (_context.t0.response && _context.t0.response.data && _context.t0.response.data.message) {
-                errorMessage = _context.t0.response.data.message;
-              }
               sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
                 title: 'Error',
                 text: errorMessage,
@@ -2115,7 +2109,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 confirmButtonText: 'OK'
               });
               console.error(_context.t0);
-            case 20:
+            case 19:
             case "end":
               return _context.stop();
           }
@@ -2839,7 +2833,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "summary card my-3 h-100"
+    staticClass: "summary card my-3 h-100 d-flex flex-column"
   }, [_c("h1", [_vm._v("TOTAL")]), _vm._v(" "), _c("h1", [_vm._v(_vm._s(_vm.total)), _c("strong")]), _vm._v(" "), _c("div", {
     staticClass: "actions row"
   }, [_c("div", {
@@ -2888,9 +2882,19 @@ var render = function render() {
     on: {
       "product-selected": _vm.handleProductSelected
     }
-  })], 1);
+  }), _vm._v(" "), _vm._m(0)], 1);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "my-5 ml-auto"
+  }, [_c("img", {
+    attrs: {
+      src: "/bear.gif"
+    }
+  })]);
+}];
 render._withStripped = true;
 
 
@@ -56646,8 +56650,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/radahn/Documentos/Proyectos/library-era/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/radahn/Documentos/Proyectos/library-era/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/germancontreras/Documents/Proyectos/library-erp/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/germancontreras/Documents/Proyectos/library-erp/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
