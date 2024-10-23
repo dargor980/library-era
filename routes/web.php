@@ -48,6 +48,7 @@ Route::post('/product/new/add','ProductController@store')->name('addproduct');
 //Stock
 Route::get('/stock/list', 'StockController@index')->name('listStock');
 Route::get('/stock/getproducts', 'StockController@getStocks')->name('getStocks');
+Route::get('/stock/edit/{id}', 'StockController@edit')->name('editStock');
 
 Route::get('/sales/list', 'SalesController@index')->name('listSales');
 Route::get('/sales/getList', 'SalesController@getSales')->name('getSales');

@@ -88,7 +88,9 @@ class StockController extends Controller
      */
     public function edit($id)
     {
-        //
+        $stock = Stock::with(['product'])->findOrFail($id);
+
+        return view('stock.edit', compact('stock'));
     }
 
     /**
