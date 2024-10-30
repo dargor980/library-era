@@ -24,8 +24,7 @@ class UpdateStockRequest extends FormRequest
     public function rules()
     {
         return [
-            'quantity' => 'required',
-            'stock_id' => 'required|not_in:0'
+            'quantity' => 'required'
         ];
     }
 }

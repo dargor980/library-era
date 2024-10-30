@@ -78,6 +78,6 @@ Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
 
 Route::group(['middleware' => 'admin'], function() {
     Route::get('/stock/new', 'StockController@show')->name('newStock');
-   Route::post('/stock/new/update','StockController@update')->name('updatestock');
+   Route::put('/stock/new/update/{id}','StockController@update')->name('updatestock');
 
 });

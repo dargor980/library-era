@@ -18,7 +18,7 @@
             <div>
                 <h4 class="my-2 text-white">Editar Stock de Producto: <br> {{$stock->product[0]->name}}</h4>
             </div>
-            <form method="POST" action=""  class="col-12" enctype="multipart/form-data">
+            <form method="POST" action="{{route('updatestock', $stock->id)}}"  class="col-12" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
             <br>
@@ -38,8 +38,8 @@
                 
                 <div class="row justify-content-center my-3">
                     <button class="btn btn-success mb-3 text-white" type="submit"><i class="fa fa-save"></i> Guardar</button>
-                    <a class="btn btn-success mb-3 text-white mx-2" href=""> <i class="fa fa-reply text-white"></i> Lista</a>
-                    <a class="btn btn-success mb-3 text-white" href=""> <i class="fa fa-reply text-white"></i> Producto</a>
+                    <a class="btn btn-success mb-3 text-white mx-2" href="{{route('listStock')}}"> <i class="fa fa-reply text-white"></i> Lista</a>
+                    <a class="btn btn-success mb-3 text-white" href="{{route('detailProd', $stock->product[0]->id)}}"> <i class="fa fa-reply text-white"></i> Producto</a>
                 </div>
             </form>
         </div>
