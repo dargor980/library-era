@@ -114,22 +114,25 @@
           showCancelButton: true,
           cancelButtonText: 'Cancelar'
         }).then((result) => {
-          const cashReceived = parseFloat(result.value);
-          const change = cashReceived - this.total;
-          Swal.fire({
-            title: 'Vuelto',
-            html: `<p>Efectivo recibido: <strong>$${cashReceived.toFixed(2)}</strong></p>
-                  <p>Total a pagar: <strong>$${this.total.toFixed(2)}</strong></p>
-                  <p><strong>Cambio: $${change.toFixed(2)}</strong></p>`,
-            icon: 'success',
-            confirmButtonText: 'Finalizar',
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar'
-          }).then((finalResult) => {
-            if(finalResult.isConfirmed) {
-              this.finalizePayment('cash', cashReceived, change);
-            }
-          });
+          if (result.isConfirmed) {
+
+            const cashReceived = parseFloat(result.value);
+            const change = cashReceived - this.total;
+            Swal.fire({
+              title: 'Vuelto',
+              html: `<p>Efectivo recibido: <strong>$${cashReceived.toFixed(2)}</strong></p>
+                    <p>Total a pagar: <strong>$${this.total.toFixed(2)}</strong></p>
+                    <p><strong>Cambio: $${change.toFixed(2)}</strong></p>`,
+              icon: 'success',
+              confirmButtonText: 'Finalizar',
+              showCancelButton: true,
+              cancelButtonText: 'Cancelar'
+            }).then((finalResult) => {
+              if(finalResult.isConfirmed) {
+                this.finalizePayment('cash', cashReceived, change);
+              }
+            });
+          }
         })
       },
       handleTransferPayment() {

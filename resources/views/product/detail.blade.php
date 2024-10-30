@@ -63,7 +63,7 @@
                             <div class="col-md-5 text-white"><h5>Codigo de barras:</h5></div>
                             <div class="card card1 col-md-3 pl-0 text-center text-white bg-white"><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($product->bar_code, 'EAN13') }}" alt="Código de barras" /></div>
                             <div class="col-md-2">
-                                <a class="btn btn-success" href="{{route('downloadBarCode', $product->id)}}}}><i class="fas fa-save"></i> Descargar código de barras</a>
+                                <a class="btn btn-success" href="{{route('downloadBarCode', $product->id)}}"><i class="fa fa-download"></i> Descargar código de barras</a>
                             </div>
                         </div>
                     </div>
