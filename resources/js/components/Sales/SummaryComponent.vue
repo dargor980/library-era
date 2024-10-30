@@ -98,7 +98,7 @@
       handleCashPayment() {
         Swal.fire({
           title: 'Pago en efectivo',
-          html: `<p><Total a pagar: <strong>$${this.total.toFixed(2)}</strong></p>
+          html: `<p><Total a pagar: <strong>$${this.total.toFixed(0)}</strong></p>
                 <p>Ingrese el efectivo recibido: </p>`,
           input: 'number',
           inputAttributes: {
@@ -120,9 +120,9 @@
             const change = cashReceived - this.total;
             Swal.fire({
               title: 'Vuelto',
-              html: `<p>Efectivo recibido: <strong>$${cashReceived.toFixed(2)}</strong></p>
-                    <p>Total a pagar: <strong>$${this.total.toFixed(2)}</strong></p>
-                    <p><strong>Cambio: $${change.toFixed(2)}</strong></p>`,
+              html: `<p>Efectivo recibido: <strong>$${cashReceived.toFixed(0)}</strong></p>
+                    <p>Total a pagar: <strong>$${this.total.toFixed(0)}</strong></p>
+                    <p><strong>Cambio: $${change.toFixed(0)}</strong></p>`,
               icon: 'success',
               confirmButtonText: 'Finalizar',
               showCancelButton: true,
