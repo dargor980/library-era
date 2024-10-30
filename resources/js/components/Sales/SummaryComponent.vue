@@ -1,7 +1,7 @@
 <template>
     <div class="summary card my-3 h-100 d-flex flex-column">
       <h1>TOTAL</h1>
-      <h1>{{ total }}<strong></strong></h1>
+      <h1>{{ formatCurrency(total) }}<strong></strong></h1>
       <div class="actions row">
         <div class="col-md-6">
             <button class="btn btn-lg custom-button btn-block" @click="inputManually" style="background-color: #bd0003;"><i class="fa fa-keyboard-o"></i></button>
@@ -34,6 +34,7 @@
 
   import Swal from 'sweetalert2';
   import ProductSearchModal from './ProductSearchModal.vue';
+  import { currencyFormatter } from '../../utils/currencyFormatter';
 
   export default {
     name: 'SummaryComponent',
@@ -98,7 +99,7 @@
       handleCashPayment() {
         Swal.fire({
           title: 'Pago en efectivo',
-          html: `<p><Total a pagar: <strong>$${this.total.toFixed(0)}</strong></p>
+          html: `<p><Total a pagar: <strong>${currencyFormatter.format(this.total)}</strong></p>
                 <p>Ingrese el efectivo recibido: </p>`,
           input: 'number',
           inputAttributes: {
@@ -120,9 +121,9 @@
             const change = cashReceived - this.total;
             Swal.fire({
               title: 'Vuelto',
-              html: `<p>Efectivo recibido: <strong>$${cashReceived.toFixed(0)}</strong></p>
-                    <p>Total a pagar: <strong>$${this.total.toFixed(0)}</strong></p>
-                    <p><strong>Cambio: $${change.toFixed(0)}</strong></p>`,
+              html: `<p>Efectivo recibido: <strong>${currencyFormatter.format(cashReceived)}</strong></p>
+                    <p>Total a pagar: <strong>${currencyFormatter.format(this.total)}</strong></p>
+                    <p><strong>Cambio: ${currencyFormatter.format(change)}</strong></p>`,
               icon: 'success',
               confirmButtonText: 'Finalizar',
               showCancelButton: true,
@@ -138,7 +139,7 @@
       handleTransferPayment() {
         Swal.fire({
           title: 'Pago por Transferencia',
-          html: `<p>Total a pagar: <strong>$${this.total.toFixed(2)}</strong></p>
+          html: `<p>Total a pagar: <strong>${currencyFormatter.format(this.total)}</strong></p>
                 <p>Confirme que ha recibido la transferencia.</p>`,
           icon: 'info',
           confirmButtonText: 'Confirmar Pago',
@@ -162,6 +163,10 @@
 
       handleProductSelected(product) {
         this.$emit('manual-product-input', product);
+      },
+
+      formatCurrency(value) {
+        return currencyFormatter.format(value);
       }
 
 
