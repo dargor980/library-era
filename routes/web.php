@@ -45,6 +45,8 @@ Route::get('/product/new', 'ProductController@create')->name('newProduct');
 Route::post('/product/category/delete','CategoryController@destroy')->name('deleteCategory');
 Route::post('/product/new/add','ProductController@store')->name('addproduct');
 
+Route::get('/product/barcode/download/{id}', 'ProductController@downloadBarCode')->name('downloadBarCode');
+
 //Stock
 Route::get('/stock/list', 'StockController@index')->name('listStock');
 Route::get('/stock/getproducts', 'StockController@getStocks')->name('getStocks');
