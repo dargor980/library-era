@@ -1,0 +1,2 @@
+project_root_dir: "{{ base_dir }}/librarycompiled"
+compose_project_name: "librarycompiled"
