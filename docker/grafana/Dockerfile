@@ -6,7 +6,7 @@ ENV GF_SECURITY_ADMIN_PASSWORD=admin
 
 
 COPY /docker/grafana/grafana.ini /etc/grafana/grafana.ini
-COPY /docker/grafana/provisioning/dashboards /etc/grafana/provisioning/dashboards
+COPY /docker/grafana/provisioning/dasboards /etc/grafana/provisioning/dashboards
 COPY /docker/grafana/dashboards /var/lib/grafana/dashboards
 
 
