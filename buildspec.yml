@@ -17,6 +17,7 @@ phases:
       - echo Setting up environment variables for image URIs...
       - export APP_IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/library-app:$TAG"
       - export NGINX_IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/library-nginx:$TAG"
+      - export GRAFANA_IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/library-grafana:$TAG"
       
   build:
     on_failure: ABORT
@@ -24,6 +25,7 @@ phases:
       - echo Building Docker images...
       - docker build -t $APP_IMAGE_URI --build-arg user=$COMPOSE_USER --build-arg uid=$COMPOSE_UID -f docker/app/Dockerfile .
       - docker build -t $NGINX_IMAGE_URI -f docker/nginx/Dockerfile .
+      - docker build -t $GRAFANA_IMAGE_URI -f docker/grafana/Dockerfile .
 
   post_build:
     on_failure: ABORT
