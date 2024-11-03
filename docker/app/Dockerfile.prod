@@ -45,7 +45,7 @@ COPY composer.json composer.lock ./
 
 USER "$user"
 
-RUN composer install  --no-dev  --optimize-autoloader
+RUN composer install  --no-dev
 
 USER root 
 
