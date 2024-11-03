@@ -6,7 +6,8 @@ services:
       args:
         user: "${COMPOSE_USER}"
         uid: "${COMPOSE_UID}"
-      context: docker/app
+        context: .
+        dockerfile: docker/app/Dockerfile
     container_name: "${COMPOSE_NAME}.app"
     volumes:
       - ./:/var/www
@@ -16,7 +17,9 @@ services:
       - LANGUAGE=es_ES.UTF-8
 
   nginx:
-    build: docker/nginx
+    build: 
+      context: .
+      dockerfile: docker/nginx/Dockerfile
     container_name: "${COMPOSE_NAME}.nginx"
     ports:
       - ${NGINX_PORT}:80
