@@ -39,15 +39,11 @@ RUN curl -sSL https://getcomposer.org/installer > composer-setup.php \
 
 WORKDIR /var/www/
 
-COPY composer.json composer.lock ./
-
-RUN chown -R "$user":www-data /var/www/
+COPY --chown="$user":www-data . /var/www/
 
 USER "$user"
 
-RUN composer install --ignore-platform-reqs --no-progress --no-interaction --no-dev --no-scripts --prefer-dist --optimize-autoloader
-
-COPY --chown="$user":www-data . /var/www/
+RUN composer install  --no-dev  --optimize-autoloader
 
 USER root 
 
