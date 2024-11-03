@@ -26,7 +26,8 @@ phases:
       - docker build -t $NGINX_IMAGE_URI -f docker/nginx/Dockerfile .
 
   post_build:
-    - echo Pushing Docker images to Amazon ECR...
-    - docker push $APP_IMAGE_URI
-    - docker push $NGINX_IMAGE_URI
-    - echo Build completed Successfully.
+    commands:
+      - echo Pushing Docker images to Amazon ECR...
+      - docker push $APP_IMAGE_URI
+      - docker push $NGINX_IMAGE_URI
+      - echo Build completed Successfully.
