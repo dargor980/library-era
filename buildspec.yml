@@ -1,0 +1,32 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_REGION: us-east-1
+    AWS_ACCOUNT_ID: 932433595030
+    COMPOSE_USER: ubuntu
+    COMPOSE_UID: 1000
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging into Amazon ECR...
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+      - echo Obtaining the tag from CodeBuild environment variable...
+      - TAG=$CODEBUILD_SOURCE_VERSION
+      - echo "TAG is $TAG"
+      - echo Setting up environment variables for image URIs...
+      - export APP_IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/library-app:$TAG"
+      - export NGINX_IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/library-nginx:$TAG"
+      
+  build:
+    commands:
+      - echo Building Docker images...
+      - docker build -t $APP_IMGAE_URI --build-arg user=$COMPOSE_USER --build-arg uid=$COMPOSE_UID -f docker/app/Dockerfile .
+      - docker build -t $NGINX_IMAGE_URI -f docker/nginx/Dockerfile .
+
+  post_build:
+    - echo Pushing Docker images to Amazon ECR...
+    - docker push $APP_IMAGE_URI
+    - docker push $NGINX_IMAGE_URI
+    - echo Build completed Successfully.
