@@ -33,4 +33,5 @@ phases:
       - echo Pushing Docker images to Amazon ECR...
       - docker push $APP_IMAGE_URI
       - docker push $NGINX_IMAGE_URI
+      - docker push $GRAFANA_IMAGE_URI
       - echo Build completed Successfully.
