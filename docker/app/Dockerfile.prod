@@ -16,11 +16,11 @@ RUN apt-get update && apt-get install -y \
     zip \
     jpegoptim optipng pngquant gifsicle \
     vim \
-    nodejs\
+    nodejs \
     git \
-    curl\
-    tzdata\
-    libicu-dev\
+    curl \
+    tzdata \
+    libicu-dev \
     && rm -rf /var/lib/apt/lists/* \
     && echo "es_ES.UTF-8 UTF-8" > /etc/locale.gen \
     && locale-gen es_ES.UTF-8
@@ -34,26 +34,29 @@ RUN docker-php-ext-install intl
 RUN curl -sSL https://getcomposer.org/installer > composer-setup.php \
     && curl -sSL https://composer.github.io/installer.sha384sum > composer-setup.sha384sum \
     && sha384sum --check composer-setup.sha384sum \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer --2
 
-    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer --2 \
+# Cambia el directorio de trabajo a /var/www/html
+WORKDIR /var/www/html
 
-WORKDIR /var/www/
+# Copia todos los archivos del proyecto a /var/www/html
+COPY . /var/www/html
+COPY bootstrap/app.php /var/www/html/bootstrap/app.php
 
-COPY --chown="$user":www-data . /var/www/
 
-COPY composer.json composer.lock ./
+# Establece los permisos correctos para el usuario especificado
+RUN chown -R "$user":www-data /var/www/html
 
-USER "$user"
-
-RUN composer install  --no-dev
+# Ejecuta composer install
+RUN composer install --no-dev --optimize-autoloader
 
 USER root 
 
-RUN echo "America/Santiago" > /etc/timezone 
-RUN dpkg-reconfigure -f nointeractive tzdata
+# Configura la zona horaria
+RUN echo "America/Santiago" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 USER "$user"
-
 
 EXPOSE 9000
 
