@@ -23,7 +23,7 @@ phases:
     on_failure: ABORT
     commands:
       - echo Building Docker images...
-      - docker build -t $APP_IMAGE_URI --build-arg user=$COMPOSE_USER --build-arg uid=$COMPOSE_UID -f docker/app/Dockerfile .
+      - docker build -t $APP_IMAGE_URI --build-arg user=$COMPOSE_USER --build-arg uid=$COMPOSE_UID -f docker/app/Dockerfile.prod .
       - docker build -t $NGINX_IMAGE_URI -f docker/nginx/Dockerfile .
       - docker build -t $GRAFANA_IMAGE_URI -f docker/grafana/Dockerfile .
 

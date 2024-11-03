@@ -1,95 +1,94 @@
 ---
-- hosts: webservers
+- hosts: localhost
   gather_facts: no
-  
+  connection: local
 
   vars_files:
     - "./vars/vars.yaml"
-  
+
   vars_prompt:
     - name: docker_tag
       prompt: ingresa el tag de las imágenes
-      private: no 
-  
+      private: no
+
   tasks:
     - name: Docker prune
       community.docker.docker_prune:
-      container: true
-      images: true
-      images_filters:
-        dangling: false
-      networks: true
-      volumes: true
-      build_cache: true
-    
-  - name: Creates directory
-    ansible.builtin.file:
-      path: "{{ project_root_dir }}"
-      state: directory
-  
-  - name: Generate .env file
-    template:
-      src: "../.env"
-      dest: "{{ project_root_dir}}/.env"
-  
-  - name: Docker => login ECR
-    ansible.builtin.command: aws ecr get-login-password --region us-east-1
-    register: ecr_login
+        containers: true
+        images: true
+        images_filters:
+          dangling: false
+        networks: true
+        volumes: true
+        builder_cache: true
 
-  - name: AWS ECR => login
-    community.docker.docker_login:
-      username: "AWS"
-      password: "{{ ecr_login.stdout }}"
-      registry: 932433595030.dkr.ecr.us-east-1.amazonaws.com
-  
-  - name: Docker => Pull app
-    community.docker.docker_image:
-      name: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-app:{{ docker_tag }}"
-      source: pull
-  
-  - name: Docker => Pull Nginx
-    community.docker.docker_image:
-      name: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-nginx:{{ docker_tag }}"
-      source: pull
-  
-  - name: Docker => Pull Grafana
-    community.docker.docker_image:
-      name: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-grafana:{{ docker_tag }}"
-      source: pull
-  
-  - name: Docker => create network:
-    community.docker.docker_network:
-      name: "{{ compose_project_name }}_default"
-      state: present
-  
-  - name: Docker => run app
-    community.docker.docker_container:
-      name: "{{ compose_project_name }}.app"
-      image: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-app:{{ docker_tag }}"
-      state: started
-      env_file: "{{ project_root_dir }}/.env"
-      networks:
-        - name: "{{ compose_project_name }}_default"
-  
-  - name: Docker => run Nginx
-    community.docker.docker_container:
-      name: "{{ compose_project_name }}.nginx"
-      image: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-nginx:{{ docker_tag }}"
-      state: started
-      ports: "80:80"
-      networks:
-        - name: "{{ compose_project_name }}_default"
-          links:
-            - "{{ compose_project_name }}.app:app"
-  
-  - name: Docker => run Grafana
-    community.docker.docker_container:
-      name: "{{ compose_project_name }}.grafana"
-      image: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-grafana:{{ docker_tag }}"
-      state: started
-      ports: "3000:3000"
-      networks:
-        - name: "{{ compose_project_name }}_default"
-          links:
-            - "{{ compose_project_name }}.app:app"
-      
+    - name: Creates directory
+      ansible.builtin.file:
+        path: "{{ project_root_dir }}"
+        state: directory
+
+    - name: Generate .env file
+      template:
+        src: "../.env"
+        dest: "{{ project_root_dir}}/.env"
+
+    - name: Docker => login ECR
+      ansible.builtin.command: aws ecr get-login-password --region us-east-1
+      register: ecr_login
+
+    - name: AWS ECR => login
+      community.docker.docker_login:
+        username: "AWS"
+        password: "{{ ecr_login.stdout }}"
+        registry: 932433595030.dkr.ecr.us-east-1.amazonaws.com
+
+    - name: Docker => Pull app
+      community.docker.docker_image:
+        name: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-app:{{ docker_tag }}"
+        source: pull
+
+    - name: Docker => Pull Nginx
+      community.docker.docker_image:
+        name: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-nginx:{{ docker_tag }}"
+        source: pull
+
+    - name: Docker => Pull Grafana
+      community.docker.docker_image:
+        name: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-grafana:{{ docker_tag }}"
+        source: pull
+
+    - name: Docker => create network
+      community.docker.docker_network:
+        name: "{{ compose_project_name }}_default"
+        state: present
+
+    - name: Docker => run app
+      community.docker.docker_container:
+        name: "{{ compose_project_name }}.app"
+        image: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-app:{{ docker_tag }}"
+        state: started
+        env_file: "{{ project_root_dir }}/.env"
+        networks:
+          - name: "{{ compose_project_name }}_default"
+
+    - name: Docker => run Nginx
+      community.docker.docker_container:
+        name: "{{ compose_project_name }}.nginx"
+        image: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-nginx:{{ docker_tag }}"
+        state: started
+        ports: "80:80"
+        networks:
+          - name: "{{ compose_project_name }}_default"
+            links:
+              - "{{ compose_project_name }}.app:app"
+
+    - name: Docker => run Grafana
+      community.docker.docker_container:
+        name: "{{ compose_project_name }}.grafana"
+        image: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-grafana:{{ docker_tag }}"
+        state: started
+        ports: "3000:3000"
+        networks:
+          - name: "{{ compose_project_name }}_default"
+            links:
+              - "{{ compose_project_name }}.app:app"
