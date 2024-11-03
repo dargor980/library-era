@@ -9,6 +9,7 @@ env:
 
 phases:
   pre_build:
+    on_failure: ABORT
     commands:
       - echo Logging into Amazon ECR...
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
@@ -18,12 +19,14 @@ phases:
       - export NGINX_IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/library-nginx:$TAG"
       
   build:
+    on_failure: ABORT
     commands:
       - echo Building Docker images...
       - docker build -t $APP_IMAGE_URI --build-arg user=$COMPOSE_USER --build-arg uid=$COMPOSE_UID -f docker/app/Dockerfile .
       - docker build -t $NGINX_IMAGE_URI -f docker/nginx/Dockerfile .
 
   post_build:
+    on_failure: ABORT
     commands:
       - echo Pushing Docker images to Amazon ECR...
       - docker push $APP_IMAGE_URI
