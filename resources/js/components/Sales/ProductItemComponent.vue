@@ -16,11 +16,11 @@
       </td>
 
       <td class="text-center align-middle">
-        <span><strong>{{ product.price }}</strong></span>
+        <span><strong>{{ formatCurrency(product.price) }}</strong></span>
       </td>
 
       <td class="text-center align-middle">
-        <span><strong>{{ product.subtotal }}</strong></span>
+        <span><strong>{{ formatCurrency(product.subtotal) }}</strong></span>
       </td>
 
       <td class="text-center align-middle">
@@ -30,6 +30,7 @@
   </template>
   
   <script>
+  import { currencyFormatter } from '../../utils/currencyFormatter';
   export default {
     name: 'ProductItemComponent',
     props: {
@@ -50,6 +51,10 @@
     removeProduct() {
       this.$emit("remove-product", this.product)
 
+    },
+
+    formatCurrency(value) {
+      return currencyFormatter.format(value);
     }
   }
   }

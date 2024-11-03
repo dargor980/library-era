@@ -188,10 +188,6 @@
             } catch(error) {
                 let errorMessage = 'Ha ocurrido un error. Por favor inténtelo nuevamente';
 
-                if(error.response && error.response.data && error.response.data.message) {
-                    errorMessage = error.response.data.message;
-                }
-
                 Swal.fire({
                     title: 'Error',
                     text: errorMessage,

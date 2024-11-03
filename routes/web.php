@@ -45,9 +45,12 @@ Route::get('/product/new', 'ProductController@create')->name('newProduct');
 Route::post('/product/category/delete','CategoryController@destroy')->name('deleteCategory');
 Route::post('/product/new/add','ProductController@store')->name('addproduct');
 
+Route::get('/product/barcode/download/{id}', 'ProductController@downloadBarCode')->name('downloadBarCode');
+
 //Stock
 Route::get('/stock/list', 'StockController@index')->name('listStock');
 Route::get('/stock/getproducts', 'StockController@getStocks')->name('getStocks');
+Route::get('/stock/edit/{id}', 'StockController@edit')->name('editStock');
 
 Route::get('/sales/list', 'SalesController@index')->name('listSales');
 Route::get('/sales/getList', 'SalesController@getSales')->name('getSales');
@@ -77,6 +80,6 @@ Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
 
 Route::group(['middleware' => 'admin'], function() {
     Route::get('/stock/new', 'StockController@show')->name('newStock');
-   Route::post('/stock/new/update','StockController@update')->name('updatestock');
+   Route::put('/stock/new/update/{id}','StockController@update')->name('updatestock');
 
 });

@@ -158,11 +158,6 @@
                   </a>
                   <div class="sidebar-submenu">
                     <ul>
-                      @if(auth()->user()->id==1)
-                      <li>
-                        <a href="{{route('newStock')}}">Ingresar Stock</a>
-                      </li>
-                      @endif
                       <li>
                         <a href="{{route('listStock')}}">Listado de Stock</a>
                       </li>

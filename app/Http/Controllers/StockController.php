@@ -88,7 +88,9 @@ class StockController extends Controller
      */
     public function edit($id)
     {
-        //
+        $stock = Stock::with(['product'])->findOrFail($id);
+
+        return view('stock.edit', compact('stock'));
     }
 
     /**
@@ -96,10 +98,10 @@ class StockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateStockRequest $request)
+    public function update(UpdateStockRequest $request, $id)
     {
         try {
-            Stock::find($request->stock_id)
+            Stock::findOrFail($id)
                 ->update([
                     'quantity' => $request->quantity
                 ])

@@ -28,10 +28,12 @@
             <tr class="boton text-white">
               <th scope="col">Cod.</th>
               <th scope="col">Nombre</th>
+              <th scope="col">Código de barras</th>
               <th scope="col">Precio</th>
               <th scope="col">Cantidad</th>
               <th scope="col">Medida</th>
               <th scope="col">Categoria</th>
+              <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -57,17 +59,24 @@
             columnDefs: [
                 {
                     searchable: false,
-                    targets: [3,4,5],
+                    targets: [4,5,6,7],
                 }
             ],
             ajax: '{!! route('getStocks') !!}',
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
+                {data: 'bar_code', name: 'bar_code'},
                 {data: 'price', name: 'price'},
                 {data: 'stock[0].quantity', name: 'stock[0].quantity'},
                 {data: 'unit_type[0].name', name: 'unit_type[0].name'},
                 {data: 'category[0].name', name: 'category[0].name'},
+                {
+                    data: 'stock[0].id',
+                    render: function(data) {
+                        return `<span><a href="/stock/edit/${data}"><i class="fa fa-pencil text-success">&nbsp;</i></a></span>`
+                    }
+                }
 
             ],
             drawCallback: function( settings ) {
