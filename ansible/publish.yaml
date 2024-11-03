@@ -39,7 +39,7 @@
   - name: AWS ECR => login
     community.docker.docker_login:
       username: "AWS"
-      password: "{{ ecr_login_stdout }}"
+      password: "{{ ecr_login.stdout }}"
       registry: 932433595030.dkr.ecr.us-east-1.amazonaws.com
   
   - name: Docker => Pull app
@@ -50,6 +50,11 @@
   - name: Docker => Pull Nginx
     community.docker.docker_image:
       name: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-nginx:{{ docker_tag }}"
+      source: pull
+  
+  - name: Docker => Pull Grafana
+    community.docker.docker_image:
+      name: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-grafana:{{ docker_tag }}"
       source: pull
   
   - name: Docker => create network:
@@ -66,12 +71,23 @@
       networks:
         - name: "{{ compose_project_name }}_default"
   
-  - name: Dokcer => run Nginx
+  - name: Docker => run Nginx
     community.docker.docker_container:
       name: "{{ compose_project_name }}.nginx"
       image: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-nginx:{{ docker_tag }}"
       state: started
       ports: "80:80"
+      networks:
+        - name: "{{ compose_project_name }}_default"
+          links:
+            - "{{ compose_project_name }}.app:app"
+  
+  - name: Docker => run Grafana
+    community.docker.docker_container:
+      name: "{{ compose_project_name }}.grafana"
+      image: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-grafana:{{ docker_tag }}"
+      state: started
+      ports: "3000:3000"
       networks:
         - name: "{{ compose_project_name }}_default"
           links:
