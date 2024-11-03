@@ -39,7 +39,7 @@
   - name: AWS ECR => login
     community.docker.docker_login:
       username: "AWS"
-      password: "{{ ecr_login_stdout }}"
+      password: "{{ ecr_login.stdout }}"
       registry: 932433595030.dkr.ecr.us-east-1.amazonaws.com
   
   - name: Docker => Pull app
