@@ -37,8 +37,9 @@ RUN curl -sSL https://getcomposer.org/installer > composer-setup.php \
 
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer --2 \
 
+WORKDIR /var/www/
 
-COPY /composer*.son composer.lock ./
+COPY composer.json composer.lock ./
 
 RUN chown -R "$user":www-data /var/www/
 
@@ -50,10 +51,12 @@ COPY --chown="$user":www-data . /var/www/
 
 USER root 
 
-RUN ECHO "America/Santiago" > /etc/timezone 
+RUN echo "America/Santiago" > /etc/timezone 
 RUN dpkg-reconfigure -f nointeractive tzdata
 
-COPY . /var/www/
+USER "$user"
+
+
 EXPOSE 9000
 
 CMD ["php-fpm", "-F"]
