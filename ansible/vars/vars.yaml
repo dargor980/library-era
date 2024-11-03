@@ -1,2 +1,4 @@
 project_root_dir: "{{ base_dir }}/librarycompiled"
 compose_project_name: "librarycompiled"
+# base_dir: "/Users/germancontreras" ruta dev
+base_dir: "/home/radahn"
