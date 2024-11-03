@@ -41,6 +41,8 @@ WORKDIR /var/www/
 
 COPY --chown="$user":www-data . /var/www/
 
+COPY composer.json composer.lock ./
+
 USER "$user"
 
 RUN composer install  --no-dev  --optimize-autoloader
