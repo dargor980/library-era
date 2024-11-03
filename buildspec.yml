@@ -12,8 +12,7 @@ phases:
     commands:
       - echo Logging into Amazon ECR...
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
-      - echo "TAG is $TAG"
-      - TAG=${TAG#refs/tags/}
+      - TAG=$(git describe --tags --abbrev=0)
       - echo Setting up environment variables for image URIs...
       - export APP_IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/library-app:$TAG"
       - export NGINX_IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/library-nginx:$TAG"
