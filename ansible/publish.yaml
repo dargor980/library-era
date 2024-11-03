@@ -61,12 +61,15 @@
       community.docker.docker_network:
         name: "{{ compose_project_name }}_default"
         state: present
+        connected:
+          - mariadb104
 
     - name: Docker => run app
       community.docker.docker_container:
         name: "{{ compose_project_name }}.app"
         image: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-app:{{ docker_tag }}"
         state: started
+        restart_policy: always
         env_file: "{{ project_root_dir }}/.env"
         networks:
           - name: "{{ compose_project_name }}_default"
@@ -76,6 +79,7 @@
         name: "{{ compose_project_name }}.nginx"
         image: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-nginx:{{ docker_tag }}"
         state: started
+        restart_policy: always
         ports: "80:80"
         networks:
           - name: "{{ compose_project_name }}_default"
@@ -87,6 +91,7 @@
         name: "{{ compose_project_name }}.grafana"
         image: "932433595030.dkr.ecr.us-east-1.amazonaws.com/library-grafana:{{ docker_tag }}"
         state: started
+        restart_policy: always
         ports: "3000:3000"
         networks:
           - name: "{{ compose_project_name }}_default"
